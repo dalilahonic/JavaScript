@@ -571,3 +571,72 @@ function calculateAvrage(arr) {
 }
 
 console.log(calculateAvrage([10, 34, 42])); 
+
+//....................
+
+
+let temperatures = [3, -2, -6, -1, 'error', 9, 13, 17, 15, 14, 9, 5];
+
+let highest = temperatures[0];
+let lowest = temperatures[0];
+
+for (let i = 0; i < temperatures.length; i++) {
+    if(typeof temperatures[i] !== 'number') continue;
+
+  if (temperatures[i] > highest) {
+    highest = temperatures[i];
+  }
+
+  if (temperatures[i] < lowest) {
+    lowest = temperatures[i];
+  }
+}
+
+console.log('The highest temperature is ', highest);
+console.log('the lowest temperature is ', lowest);
+console.log('amplitude is ', highest - lowest);
+
+//..........
+
+const numbers = [5, 2, 9, 1, 7, 3];
+
+console.log(Math.max(...numbers));
+console.log(Math.min(...numbers));
+
+///Here, ...numbers spreads the array elements [5, 2, 9, 1, 7, 3] into separate arguments, as if you had written Math.max(5, 2, 9, 1, 7, 3) and Math.min(5, 2, 9, 1, 7, 3).
+// the spread operator is used to expand an array into separate arguments
+
+// let temperaturesAndNumbers = temperatures.concat(numbers);
+
+// console.log(temperaturesAndNumbers);
+
+noviArray = [21, 432, 432, 32, 22, 1, 53]
+temperatures = temperatures.concat(noviArray);
+console.log(temperatures);
+
+
+let reverseThisArray = [2, 8, 3, 5 , 4];
+console.log(reverseThisArray);
+
+let reverisedArray = [];
+
+for(let i = reverseThisArray.length - 1; i >= 0 ; i--) {
+    reverisedArray.push(reverseThisArray[i])
+}
+
+console.log(reverisedArray);
+
+//.............
+
+let arr = [17, 21, 23]
+
+function printForecast(data) {
+    let str = '';
+    for(let i = 0, x = 1; i < data.length; i++, x++) {
+        // console.log(`...  ${data[i]} C in ${x} days`);
+        str = str + ` ${data[i]} C in ${x} days ... `;
+    }
+    console.log('...' + str);
+}
+
+printForecast(arr);
