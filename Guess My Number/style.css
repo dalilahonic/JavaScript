@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box ;
+    font-family: Indie Flower;
+    margin-bottom:0;
+}
+
+.main {
+    background-color: rgb(60, 57, 57);
+    height: 100vh;
+    width: 100%;
+}
+
+button.again,
+button.check {
+    width: 10%;
+    height: 50px;
+    background-color: white;
+    color: black;
+    font-size: 30px;
+    border: none;
+    border-radius: 1px;
+    margin: 2%;
+    outline: none;
+}
+
+.again:hover,
+.check:hover {
+    cursor: pointer;
+}
+
+.guess-my-number h1 {
+    font-size: 50px;
+    text-align: center;
+    transform: translateY(-50%);
+}
+
+.correct-number {
+    display: block;
+    margin: auto;
+    width: 8vw;
+    height: 8vw;
+    background-color: white;
+    color: black;
+    font-size: 100px;
+    text-align: center;
+    /* position: relative; */
+}
+
+.correct {
+    width: 100%;
+    position: relative;
+}
+
+.correct-number::before,
+.correct-number::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 35%;
+    height: 1vh;
+    background-color: grey;
+}
+
+.correct-number::before {
+    left: 5%;
+}
+.correct-number::after {
+    right: 5%;
+}
+
+input {
+    height: 50px;
+    margin: 2%;
+    width: 20%;
+    font-size: 35px;
+}
+
+.select-number-left {
+    padding-top: 7%;
+    display: flex;
+    flex-direction: column;
+}
+
+.select-number-parent {
+    padding-inline: 10%;
+    height: 50%;
+    position: relative  ;
+}
+
+.select-number-rigth {
+    position: absolute;
+    right: 20%;
+    top:10%;
+    margin-right: 10%;
+}
+
+.select-number-rigth p {
+    font-size:40px;
+    margin-block: 5%;
+}
