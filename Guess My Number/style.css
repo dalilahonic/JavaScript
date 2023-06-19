@@ -27,6 +27,7 @@ button.check {
     border-radius: 1px;
     margin: 2%;
     outline: none;
+    font-weight: 700    ;
 }
 
 .again:hover,

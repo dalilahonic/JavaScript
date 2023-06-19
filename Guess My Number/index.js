@@ -53,7 +53,7 @@ checkButton.addEventListener('click', () => {
   //when the player wins
   else if (inputValue == randomNumber) {
     displayMessage('correct Number');
-    mainDiv.style.backgroundColor = 'green';
+    mainDiv.style.backgroundColor = '#4ca543 ';
     correctNumber.textContent = randomNumber;
 
     if (score > highscore) {
@@ -63,6 +63,7 @@ checkButton.addEventListener('click', () => {
   }
 });
 
+//adding a keydown event
 document.addEventListener('keydown', (event) => {
   if(event.key === 'Enter') {
     checkButton.click();
