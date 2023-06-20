@@ -610,7 +610,7 @@ console.log(Math.min(...numbers));
 
 // console.log(temperaturesAndNumbers);
 
-noviArray = [21, 432, 432, 32, 22, 1, 53]
+let noviArray = [21, 432, 432, 32, 22, 1, 53]
 temperatures = temperatures.concat(noviArray);
 console.log(temperatures);
 
