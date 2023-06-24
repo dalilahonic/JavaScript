@@ -31,7 +31,7 @@ for (let i = 0, j = 0; i < array.length; j++) {
 }
 
 //...............................................
-//make a copy of the array without duplicates without sets.
+//make a copy of the array without duplicates without using sets.
 
 function noDuplicates(arr) {
   let copyArr = [];
