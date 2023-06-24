@@ -45,7 +45,7 @@ function noDuplicates(arr) {
 console.log(noDuplicates([12, 23, 32, 423, 5, 3, 12]));
 
 //...............................................................
-//find 3 biggest values in an array without sort method.
+//find 3 biggest values in an array without using sort method.
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
