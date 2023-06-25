@@ -162,7 +162,7 @@ function digital_root2(n) {
   }
   n = n.toString().split('');
   let result = 0;
-  for (var i = 0; i < n.length; i++) {
+  for (let i = 0; i < n.length; i++) {
     result += Number(n[i]);
   }
   return result < 10 ? result : digital_root(result);
