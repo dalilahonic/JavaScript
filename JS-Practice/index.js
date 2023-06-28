@@ -349,13 +349,84 @@ function isPalindrome3(x) {
   a = 0;
   b = x.length - 1;
 
-  while(a < b) {
-    if(x[a] !== x[b]) return false
-    a++
-    b--
+  while (a < b) {
+    if (x[a] !== x[b]) return false;
+    a++;
+    b--;
   }
-  return true
+  return true;
 }
 
-console.log(isPalindrome3('noon') );
-console.log(isPalindrome3('sentence') );
+console.log(isPalindrome3('noon'));
+console.log(isPalindrome3('sentence'));
+
+//.................................................................
+
+//create a function that will break up camel casing, using a space between words.
+
+function breakCamelCase(str) {
+  let result = '';
+
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === str[i].toUpperCase()) {
+      result += ' ' + str[i];
+    } else {
+      result += str[i];
+    }
+  }
+
+  return result;
+}
+
+console.log(breakCamelCase('dalilaHonic'));
+
+// SOLUTION #2
+
+function breakCamelCase2(str) {
+  // str = str.split('');
+  str = [...str]
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] !== str[i].toLowerCase()) {
+      str[i] = ' ' + str[i];
+    }
+  }
+  str = str.join('')
+  return str
+}
+
+console.log(breakCamelCase2('dalilaHonic'));
+
+//.....................................................
+
+//Take 2 strings s1 and s2 including only letters from a to z. Return a new sorted string, the longest possible, containing distinct letters - each taken only once - coming from s1 or s2.
+
+function longest(s1, s2) {
+  const combinedSet = new Set(s1 + s2);
+  const combinedArray = Array.from(combinedSet);
+  const sortedArray = combinedArray.sort();
+  const result = sortedArray.join('');
+  return result;
+}
+
+console.log(longest('xyaabbbccccdefww', 'xxxxyyyyabklmopq'));
+
+// SOLUTION #2
+
+const longest2 = (s1, s2) => [...new Set(s1+s2)].sort().join('');
+
+// function longest(s1, s2) {
+//   return Array.from(new Set(s1 + s2)).sort().join('');
+// }
+
+//..............................................
+
+//Write a function which calculates the average of the numbers in a given list.
+
+function calculateAvrage(arr) {
+  let sum = 0;
+  for(let a of arr) sum += a;
+  sum = sum / arr.length;
+  return sum || 0
+}
+
+console.log(calculateAvrage([1,2 ,3, 4, 5, 6]));
