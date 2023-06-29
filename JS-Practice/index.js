@@ -384,14 +384,14 @@ console.log(breakCamelCase('dalilaHonic'));
 
 function breakCamelCase2(str) {
   // str = str.split('');
-  str = [...str]
+  str = [...str];
   for (let i = 0; i < str.length; i++) {
     if (str[i] !== str[i].toLowerCase()) {
       str[i] = ' ' + str[i];
     }
   }
-  str = str.join('')
-  return str
+  str = str.join('');
+  return str;
 }
 
 console.log(breakCamelCase2('dalilaHonic'));
@@ -412,7 +412,7 @@ console.log(longest('xyaabbbccccdefww', 'xxxxyyyyabklmopq'));
 
 // SOLUTION #2
 
-const longest2 = (s1, s2) => [...new Set(s1+s2)].sort().join('');
+const longest2 = (s1, s2) => [...new Set(s1 + s2)].sort().join('');
 
 // function longest(s1, s2) {
 //   return Array.from(new Set(s1 + s2)).sort().join('');
@@ -424,9 +424,35 @@ const longest2 = (s1, s2) => [...new Set(s1+s2)].sort().join('');
 
 function calculateAvrage(arr) {
   let sum = 0;
-  for(let a of arr) sum += a;
+  for (let a of arr) sum += a;
   sum = sum / arr.length;
-  return sum || 0
+  return sum || 0;
 }
 
-console.log(calculateAvrage([1,2 ,3, 4, 5, 6]));
+console.log(calculateAvrage([1, 2, 3, 4, 5, 6]));
+
+//....................................................
+
+// Write a function that takes an array of numbers (integers for the tests) and a target number. It should find two different items in the array that, when added together, give the target value. The indexes of these items should then be returned in a tuple / list (depending on your language) like so: (index1, index2).
+//twoSum([1, 2, 3], 4) // returns [0, 2] or [2, 0]
+
+function twoSum(numbers, target) {
+  for (let i = 0; i < numbers.length; i++) {
+    let newArr = [];
+    for (let x = 0; x < numbers.length; x++) {
+      if (numbers[i] + numbers[x] === target && x !== i) {
+        newArr.push(numbers.indexOf(numbers[i]));
+        numbers[i] === numbers[x]
+          ? newArr.push(numbers.lastIndexOf(numbers[x]))
+          : newArr.push(numbers.indexOf(numbers[x]));
+
+        return newArr;
+      }
+    }
+  }
+}
+
+console.log(twoSum([1, 2, 3], 4));
+console.log(twoSum([2, 2, 3], 4));
+
+//................................................
