@@ -67,7 +67,10 @@ let indexOf = 0;
 
 for (let i = 0; i < arr.length; i++) {
   for (let x = 0; x < biggest.length; x++) {
-    if (arr[i] > smallestNumber(biggest) && !biggest.includes(arr[i])) {
+    if (
+      arr[i] > smallestNumber(biggest) &&
+      !biggest.includes(arr[i])
+    ) {
       indexOf = biggest.indexOf(smallestNumber(biggest));
       biggest[indexOf] = arr[i];
     }
@@ -147,7 +150,8 @@ function digital_root(n) {
   if (n < 10) return n;
 
   let sum = 0;
-  for (i = 0, x = String(n); i < x.length; i++) sum += Number(x[i]);
+  for (i = 0, x = String(n); i < x.length; i++)
+    sum += Number(x[i]);
 
   return digital_root(sum);
 }
@@ -204,7 +208,8 @@ function isIsogram3(str) {
   str = str.toLowerCase().split('');
 
   for (let i = 0; i < str.length; i++) {
-    if (str.indexOf(str[i]) !== str.lastIndexOf(str[i])) return false;
+    if (str.indexOf(str[i]) !== str.lastIndexOf(str[i]))
+      return false;
   }
   return true;
 }
@@ -254,7 +259,8 @@ console.log(filterArr([1, 2, 'a', 'b']));
 function shortestWord(str) {
   str = str.split(' ');
   let shortestWord = str[0];
-  for (s of str) if (s.length < shortestWord.length) shortestWord = s;
+  for (s of str)
+    if (s.length < shortestWord.length) shortestWord = s;
 
   return shortestWord.length;
 }
@@ -285,7 +291,8 @@ function distance(arr) {
   for (let i = 0; i < arr.length; i++) {
     for (let x = 0; x < arr.length; x++) {
       if (arr[i] === arr[x] && i !== x) {
-        let distanceNum = arr.lastIndexOf(arr[i]) - arr.indexOf(arr[i]);
+        let distanceNum =
+          arr.lastIndexOf(arr[i]) - arr.indexOf(arr[i]);
         distances.push(distanceNum);
       }
     }
@@ -294,7 +301,8 @@ function distance(arr) {
   let biggestDistance = distances[0];
   if (biggestDistance === undefined) return 0;
   for (let i = 0; i < distances.length; i++) {
-    if (distances[i] > biggestDistance) biggestDistance = distances[i];
+    if (distances[i] > biggestDistance)
+      biggestDistance = distances[i];
   }
   return biggestDistance;
 }
@@ -320,7 +328,8 @@ console.log(greatestDistance([1, 2, 3, 4, 5, 1]));
 //Write a function that checks if a given string (case insensitive) is a palindrome. A palindrome is a word, number, phrase, or other sequence of symbols that reads the same backwards as forwards, such as madam or racecar, the date and time 12/21/33 12:21, and the sentence: "A man, a plan, a canal – Panama".
 
 const isPalindrome = (x) => {
-  return x.split('').reverse().join('').toLowerCase() === x.toLowerCase()
+  return x.split('').reverse().join('').toLowerCase() ===
+    x.toLowerCase()
     ? true
     : false;
 };
@@ -408,11 +417,14 @@ function longest(s1, s2) {
   return result;
 }
 
-console.log(longest('xyaabbbccccdefww', 'xxxxyyyyabklmopq'));
+console.log(
+  longest('xyaabbbccccdefww', 'xxxxyyyyabklmopq')
+);
 
 // SOLUTION #2
 
-const longest2 = (s1, s2) => [...new Set(s1 + s2)].sort().join('');
+const longest2 = (s1, s2) =>
+  [...new Set(s1 + s2)].sort().join('');
 
 // function longest(s1, s2) {
 //   return Array.from(new Set(s1 + s2)).sort().join('');
@@ -494,11 +506,13 @@ function comp(a, b) {
   const frequencyCounterB = {};
 
   for (let num of a) {
-    frequencyCounterA[num] = (frequencyCounterA[num] || 0) + 1;
+    frequencyCounterA[num] =
+      (frequencyCounterA[num] || 0) + 1;
   }
 
   for (let num of b) {
-    frequencyCounterB[num] = (frequencyCounterB[num] || 0) + 1;
+    frequencyCounterB[num] =
+      (frequencyCounterB[num] || 0) + 1;
   }
 
   const keysA = Object.keys(frequencyCounterA);
@@ -545,7 +559,9 @@ function comp2(array1, array2) {
   if (array1 == null || array2 == null) return false;
   array1.sort((a, b) => a - b);
   array2.sort((a, b) => a - b);
-  return array1.map((v) => v * v).every((v, i) => v === array2[i]);
+  return array1
+    .map((v) => v * v)
+    .every((v, i) => v === array2[i]);
 }
 
 //........checking the multiplicity of elements in an array.
@@ -558,7 +574,9 @@ function countElements(arr) {
   return counts;
 }
 
-console.log(countElements([1, 2, 3, 1, 1, 1, 2, 3, 4, 5, 6]));
+console.log(
+  countElements([1, 2, 3, 1, 1, 1, 2, 3, 4, 5, 6])
+);
 
 // SOLUTION #2
 
@@ -614,8 +632,35 @@ function wave2(str) {
       arr.push(letters.join(''));
     }
   }
-  
-  return arr
+
+  return arr;
 }
 
 console.log(wave2('two words'));
+
+//.............................................
+
+//Write a function that takes in a string of one or more words, and returns the same string, but with all five or more letter words reversed (Just like the name of this Kata). Strings passed in will consist of only letters and spaces. Spaces will be included only when more than one word is present.
+//spinWords( "Hey fellow warriors" ) => returns "Hey wollef sroirraw"
+// spinWords( "This is a test") => returns "This is a test"
+// spinWords( "This is another test" )=> returns "This is rehtona test"
+
+function spinWords(str) {
+  let strArr = str.split(' ');
+
+  for (let i = 0; i < strArr.length; i++) {
+    if (strArr[i].length >= 5) {
+      let word = strArr[i];
+      strArr[i] = ''
+      for (let j = word.length - 1; j >= 0; j--) {
+        strArr[i] += word[j]
+        
+      }
+    }
+  }
+
+  let string = strArr.join(' ');
+  return string;
+}
+
+console.log(spinWords('This is another test'));
