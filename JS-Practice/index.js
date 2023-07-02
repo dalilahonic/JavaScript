@@ -433,7 +433,7 @@ console.log(calculateAvrage([1, 2, 3, 4, 5, 6]));
 
 //....................................................
 
-// Write a function that takes an array of numbers (integers for the tests) and a target number. It should find two different items in the array that, when added together, give the target value. The indexes of these items should then be returned in a tuple / list (depending on your language) like so: (index1, index2).
+// Write a function that takes an array of numbers (integers for the tests) and a target number. It should find two different items in the array that, when added together, give the target value. The indexes of these items should then be returned in a tuple / list like so: (index1, index2).
 //twoSum([1, 2, 3], 4) // returns [0, 2] or [2, 0]
 
 function twoSum(numbers, target) {
@@ -456,3 +456,166 @@ console.log(twoSum([1, 2, 3], 4));
 console.log(twoSum([2, 2, 3], 4));
 
 //................................................
+
+// Compose a program that, for an input array of integers of length n, finds the position of the desired element or prints a message indicating that the desired element does not exist in the array.
+
+function positionOfElement(arr, num) {
+  let indexOf;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === num) {
+      indexOf = arr.indexOf(arr[i]);
+      return 'index is ' + indexOf;
+    } else if (!arr.includes(num)) {
+      return `desired element does not exist in the array`;
+    }
+  }
+}
+
+console.log(positionOfElement([1, 2, 3, 4, 5, 6], 10));
+
+//............................................................................
+
+//Given two arrays a and b write a function comp(a, b) (orcompSame(a, b)) that checks whether the two arrays have the "same" elements, with the same multiplicities (the multiplicity of a member is the number of times it appears). "Same" means, here, that the elements in b are the elements in a squared, regardless of the order.
+
+// function comp(a, b) {
+//   for (let i = 0; i < a.length; i++) {
+//     if (b.includes(a[i] * a[i])) continue;
+//     return false;
+//   }
+//   return true;
+// }
+
+function comp(a, b) {
+  if (a === null || b === null || a.length !== b.length) {
+    return false;
+  }
+
+  const frequencyCounterA = {};
+  const frequencyCounterB = {};
+
+  for (let num of a) {
+    frequencyCounterA[num] = (frequencyCounterA[num] || 0) + 1;
+  }
+
+  for (let num of b) {
+    frequencyCounterB[num] = (frequencyCounterB[num] || 0) + 1;
+  }
+
+  const keysA = Object.keys(frequencyCounterA);
+  const keysB = Object.keys(frequencyCounterB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  for (let i = 0; i < keysA.length; i++) {
+    const keyA = keysA[i];
+    const keyB = keysA[i] ** 2;
+
+    if (
+      !(keyB in frequencyCounterB) ||
+      frequencyCounterB[keyB] !== frequencyCounterA[keyA]
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+console.log(
+  comp(
+    [121, 144, 19, 161, 19, 144, 19, 11],
+    [
+      11 * 11,
+      121 * 121,
+      144 * 144,
+      19 * 19,
+      161 * 161,
+      19 * 19,
+      144 * 144,
+      19 * 19,
+    ]
+  )
+);
+
+// SOLUTION #2
+
+function comp2(array1, array2) {
+  if (array1 == null || array2 == null) return false;
+  array1.sort((a, b) => a - b);
+  array2.sort((a, b) => a - b);
+  return array1.map((v) => v * v).every((v, i) => v === array2[i]);
+}
+
+//........checking the multiplicity of elements in an array.
+
+function countElements(arr) {
+  let counts = {};
+  for (let a of arr) {
+    counts[a] = counts[a] ? counts[a] + 1 : 1;
+  }
+  return counts;
+}
+
+console.log(countElements([1, 2, 3, 1, 1, 1, 2, 3, 4, 5, 6]));
+
+// SOLUTION #2
+
+function countElements2(array) {
+  return array.reduce(function (counts, element) {
+    counts[element] = (counts[element] || 0) + 1;
+    return counts;
+  }, {});
+}
+
+// SOLUTION #3
+
+function countElements(array) {
+  let counts = new Map();
+  array.forEach(function (element) {
+    counts.set(element, (counts.get(element) || 0) + 1);
+  });
+  return counts;
+}
+
+//..............................................
+
+//wave("hello") => ["Hello", "hEllo", "heLlo", "helLo", "hellO"]
+
+function wave(str) {
+  let arr = [];
+
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === ' ') continue;
+    str =
+      str.slice(0, i).toLowerCase() +
+      str.slice(i, i + 1).toUpperCase() +
+      str.slice(i + 1).toLowerCase();
+    arr.push(str);
+  }
+
+  return arr;
+}
+
+console.log(wave('dalila'));
+console.log(wave('Two words'));
+
+// SOLUTION #2
+
+function wave2(str) {
+  let arr = [];
+
+  for (let i = 0; i < str.length; i++) {
+    let letters = str.split('');
+
+    if (letters[i] !== ' ') {
+      letters[i] = letters[i].toUpperCase();
+      arr.push(letters.join(''));
+    }
+  }
+  
+  return arr
+}
+
+console.log(wave2('two words'));
