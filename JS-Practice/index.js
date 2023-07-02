@@ -42,9 +42,7 @@ function noDuplicates(arr) {
   }
   return copyArr;
 }
-console.log(
-  noDuplicates([12, 23, 32, 423, 5, 3, 12])
-);
+console.log(noDuplicates([12, 23, 32, 423, 5, 3, 12]));
 
 //...............................................................
 //find 3 biggest values in an arr without using sort method.
@@ -73,9 +71,7 @@ for (let i = 0; i < arr.length; i++) {
       arr[i] > smallestNumber(biggest) &&
       !biggest.includes(arr[i])
     ) {
-      indexOf = biggest.indexOf(
-        smallestNumber(biggest)
-      );
+      indexOf = biggest.indexOf(smallestNumber(biggest));
       biggest[indexOf] = arr[i];
     }
   }
@@ -173,9 +169,7 @@ function digital_root2(n) {
   for (let i = 0; i < n.length; i++) {
     result += Number(n[i]);
   }
-  return result < 10
-    ? result
-    : digital_root(result);
+  return result < 10 ? result : digital_root(result);
 }
 
 console.log(digital_root2(5555));
@@ -202,9 +196,7 @@ console.log(isIsogram('moose'));
 //SOLUTION #2
 
 function isIsogram2(str) {
-  return (
-    new Set(str.toUpperCase()).size === str.length
-  );
+  return new Set(str.toUpperCase()).size === str.length;
 }
 
 console.log(isIsogram2('Dermatoglyphics'));
@@ -216,10 +208,7 @@ function isIsogram3(str) {
   str = str.toLowerCase().split('');
 
   for (let i = 0; i < str.length; i++) {
-    if (
-      str.indexOf(str[i]) !==
-      str.lastIndexOf(str[i])
-    )
+    if (str.indexOf(str[i]) !== str.lastIndexOf(str[i]))
       return false;
   }
   return true;
@@ -243,8 +232,7 @@ function stringEnd(str, ending) {
 
 console.log(stringEnd('abc', 'c'));
 
-const stringEnd2 = (str, ending) =>
-  str.endsWith(ending);
+const stringEnd2 = (str, ending) => str.endsWith(ending);
 console.log(stringEnd2('abc', 'c'));
 
 //..........................
@@ -272,15 +260,12 @@ function shortestWord(str) {
   str = str.split(' ');
   let shortestWord = str[0];
   for (s of str)
-    if (s.length < shortestWord.length)
-      shortestWord = s;
+    if (s.length < shortestWord.length) shortestWord = s;
 
   return shortestWord.length;
 }
 
-console.log(
-  shortestWord('this is some sentence')
-);
+console.log(shortestWord('this is some sentence'));
 //...................................................................
 
 // Given two integers a and b, which can be positive or negative, find the sum of all the integers between and including them and return it. If the two numbers are equal return a or b.
@@ -307,8 +292,7 @@ function distance(arr) {
     for (let x = 0; x < arr.length; x++) {
       if (arr[i] === arr[x] && i !== x) {
         let distanceNum =
-          arr.lastIndexOf(arr[i]) -
-          arr.indexOf(arr[i]);
+          arr.lastIndexOf(arr[i]) - arr.indexOf(arr[i]);
         distances.push(distanceNum);
       }
     }
@@ -324,9 +308,7 @@ function distance(arr) {
 }
 
 console.log(distance([0, 2, 1, 2, 4, 1]));
-console.log(
-  distance([1, 2, 3, 2, 3, 4, 5, 1, 4, 5])
-);
+console.log(distance([1, 2, 3, 2, 3, 4, 5, 1, 4, 5]));
 console.log(distance([1, 2, 3, 4]));
 
 // SOLUTION #2
@@ -334,9 +316,7 @@ console.log(distance([1, 2, 3, 4]));
 const greatestDistance = function (data) {
   let result = [];
   for (let num of data) {
-    result.push(
-      data.lastIndexOf(num) - data.indexOf(num)
-    );
+    result.push(data.lastIndexOf(num) - data.indexOf(num));
   }
 
   return Math.max(...result);
@@ -348,11 +328,8 @@ console.log(greatestDistance([1, 2, 3, 4, 5, 1]));
 //Write a function that checks if a given string (case insensitive) is a palindrome. A palindrome is a word, number, phrase, or other sequence of symbols that reads the same backwards as forwards, such as madam or racecar, the date and time 12/21/33 12:21, and the sentence: "A man, a plan, a canal – Panama".
 
 const isPalindrome = (x) => {
-  return x
-    .split('')
-    .reverse()
-    .join('')
-    .toLowerCase() === x.toLowerCase()
+  return x.split('').reverse().join('').toLowerCase() ===
+    x.toLowerCase()
     ? true
     : false;
 };
@@ -475,18 +452,11 @@ function twoSum(numbers, target) {
   for (let i = 0; i < numbers.length; i++) {
     let newArr = [];
     for (let x = 0; x < numbers.length; x++) {
-      if (
-        numbers[i] + numbers[x] === target &&
-        x !== i
-      ) {
+      if (numbers[i] + numbers[x] === target && x !== i) {
         newArr.push(numbers.indexOf(numbers[i]));
         numbers[i] === numbers[x]
-          ? newArr.push(
-              numbers.lastIndexOf(numbers[x])
-            )
-          : newArr.push(
-              numbers.indexOf(numbers[x])
-            );
+          ? newArr.push(numbers.lastIndexOf(numbers[x]))
+          : newArr.push(numbers.indexOf(numbers[x]));
 
         return newArr;
       }
@@ -513,9 +483,7 @@ function positionOfElement(arr, num) {
   }
 }
 
-console.log(
-  positionOfElement([1, 2, 3, 4, 5, 6], 10)
-);
+console.log(positionOfElement([1, 2, 3, 4, 5, 6], 10));
 
 //............................................................................
 
@@ -530,11 +498,7 @@ console.log(
 // }
 
 function comp(a, b) {
-  if (
-    a === null ||
-    b === null ||
-    a.length !== b.length
-  ) {
+  if (a === null || b === null || a.length !== b.length) {
     return false;
   }
 
@@ -564,8 +528,7 @@ function comp(a, b) {
 
     if (
       !(keyB in frequencyCounterB) ||
-      frequencyCounterB[keyB] !==
-        frequencyCounterA[keyA]
+      frequencyCounterB[keyB] !== frequencyCounterA[keyA]
     ) {
       return false;
     }
@@ -593,8 +556,7 @@ console.log(
 // SOLUTION #2
 
 function comp2(array1, array2) {
-  if (array1 == null || array2 == null)
-    return false;
+  if (array1 == null || array2 == null) return false;
   array1.sort((a, b) => a - b);
   array2.sort((a, b) => a - b);
   return array1
@@ -630,10 +592,7 @@ function countElements2(array) {
 function countElements(array) {
   let counts = new Map();
   array.forEach(function (element) {
-    counts.set(
-      element,
-      (counts.get(element) || 0) + 1
-    );
+    counts.set(element, (counts.get(element) || 0) + 1);
   });
   return counts;
 }
