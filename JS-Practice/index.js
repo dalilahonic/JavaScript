@@ -23,7 +23,7 @@ let arr = [
 
 for (let i = 0, j = 0; i < arr.length; j++) {
   console.log(arr[i][j], 'arr');
-  // 🥰😍
+
   if (j === arr[i].length - 1) {
     i++;
     j = -1;
@@ -31,6 +31,7 @@ for (let i = 0, j = 0; i < arr.length; j++) {
 }
 
 //...............................................
+
 //make a copy of the arr without duplicates without using sets.
 
 function noDuplicates(arr) {
@@ -45,6 +46,7 @@ function noDuplicates(arr) {
 console.log(noDuplicates([12, 23, 32, 423, 5, 3, 12]));
 
 //...............................................................
+
 //find 3 biggest values in an arr without using sort method.
 
 const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -101,15 +103,15 @@ for (let i = 0; i < nested.length; i++) {
 }
 console.log(even);
 
-//..................................
+// ..................................
 
-//calculate the sum of the individual digit values of a given number.
+// calculate the sum of the individual digit values of a given number.
 
 function sumOFAllDigits(n) {
   let splitDigit = n.toString().split('');
 
-  let sum = Number(splitDigit[0]);
-  for (let i = 1; i < splitDigit.length; i++) {
+  let sum = 0;
+  for (let i = 0; i < splitDigit.length; i++) {
     sum += Number(splitDigit[i]);
   }
   console.log(sum);
@@ -118,7 +120,20 @@ function sumOFAllDigits(n) {
 sumOFAllDigits(23);
 sumOFAllDigits(16);
 
-//.........................
+//SOLUTION #2
+
+function sumOFAllDigits2(num) {
+  let sum = num
+    .toString()
+    .split('')
+    .reduce((acc, digit) => acc + Number(digit), 0);
+
+  return sum;
+}
+
+console.log(sumOFAllDigits2(56));
+
+// ..........................................
 
 // Given n, take the sum of the digits of n. If that value has more than one digit, continue reducing in this way until a single-digit number is produced.
 // 16  -->  1 + 6 = 7
@@ -169,10 +184,51 @@ function digital_root2(n) {
   for (let i = 0; i < n.length; i++) {
     result += Number(n[i]);
   }
-  return result < 10 ? result : digital_root(result);
+  return result < 10 ? result : digital_root2(result);
 }
 
 console.log(digital_root2(5555));
+
+// SOLUTION #4
+
+function digitalRoot2(num) {
+  if (num < 10) return num;
+
+  // return digitalRoot2(num.toString().split('').reduce(function(acc, d) { return acc + Number(d)}, 0));
+
+  return digitalRoot2(
+    num
+      .toString()
+      .split('')
+      .reduce((acc, n) => acc + Number(n), 0)
+  );
+}
+
+function digitalRoot2(num) {
+  return num < 10
+    ? num
+    : digitalRoot2(
+        num
+          .toString()
+          .split('')
+          .reduce((acc, n) => acc + Number(n), 0)
+      );
+}
+
+console.log(digitalRoot2(5555));
+
+// SOLUTION #5
+
+function digitalRoot3(n) {
+  while (n > 9) {
+    n = String(n)
+      .split('')
+      .reduce((acc, digit) => acc + Number(digit), 0);
+  }
+
+  return n;
+}
+console.log(digitalRoot3(456));
 
 //..............................................................
 
@@ -196,7 +252,7 @@ console.log(isIsogram('moose'));
 //SOLUTION #2
 
 function isIsogram2(str) {
-  return new Set(str.toUpperCase()).size === str.length;
+  return new Set(str.toLowerCase()).size === str.length;
 }
 
 console.log(isIsogram2('Dermatoglyphics'));
@@ -205,7 +261,7 @@ console.log(isIsogram2('moose'));
 // SOLUTION #3
 
 function isIsogram3(str) {
-  str = str.toLowerCase().split('');
+  str = str.toLowerCase();
 
   for (let i = 0; i < str.length; i++) {
     if (str.indexOf(str[i]) !== str.lastIndexOf(str[i]))
@@ -216,24 +272,42 @@ function isIsogram3(str) {
 
 console.log(isIsogram3('Dermatoglyphics'));
 console.log(isIsogram3('moose'));
-//......................
 
-//Create a function that returns the sum of the two lowest positive numbers given an arr of minimum 4 positive integers. No floats or non-positive integers will be passed.
+// SOLUTION #4
 
-// For example, when an arr is passed like [19, 5, 42, 2, 77], the output should be 7.
+function isIsogram4(str) {
+  str = str.toLowerCase();
 
-//...............................................................
+  for (let i = 0; i < str.length; i++) {
+    for (let x = i + 1; x < str.length; x++) {
+      if (str[i] === str[x]) return false;
+    }
+  }
+  return true;
+}
+
+// SOLUTION #5
+
+function isIsogram5(str) {
+  str = str.toLowerCase().split('');
+
+  uniques = str.filter((num, i, arr) => {
+    return arr.indexOf(num) === i;
+  });
+
+  return uniques.length === str.length ? true : false
+}
+
+// ...............................................................
 
 // make a function that returns true if the first argument(string) passed in ends with the 2nd argument (also a string).
 
-function stringEnd(str, ending) {
-  return str.endsWith(ending);
-}
+// function stringEnd(str, ending) {
+//   return str.endsWith(ending);
+// }
 
+const stringEnd = (str, ending) => str.endsWith(ending);
 console.log(stringEnd('abc', 'c'));
-
-const stringEnd2 = (str, ending) => str.endsWith(ending);
-console.log(stringEnd2('abc', 'c'));
 
 //..........................
 
@@ -663,3 +737,9 @@ function spinWords(str) {
 }
 
 console.log(spinWords('This is another test'));
+
+// ...............................................................
+
+//Create a function that returns the sum of the two lowest positive numbers given an arr of minimum 4 positive integers. No floats or non-positive integers will be passed.
+
+// For example, when an arr is passed like [19, 5, 42, 2, 77], the output should be 7.
