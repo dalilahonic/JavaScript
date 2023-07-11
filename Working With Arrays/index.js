@@ -239,119 +239,161 @@ let balance2 = 0;
 for (const mov of movements) balance2 += mov;
 console.log(balance2); //3840
 
+// MAXIMUM VALUE
+
+const max = movements.reduce((acc, mov) => {
+   if(acc > mov) return acc
+   else return mov
+},movements[0])
+
+console.log(max);
+console.log(movements);
 //.................................
 
-/* 
-Let's go back to Julia and Kate's study about dogs. This time, they want to convert dog ages to human ages and calculate the average age of the dogs in their study.
+// /* 
+// Let's go back to Julia and Kate's study about dogs. This time, they want to convert dog ages to human ages and calculate the average age of the dogs in their study.
 
-Create a function 'calcAverageHumanAge', which accepts an arrays of dog's ages ('ages'), and does the following things in order:
+// Create a function 'calcAverageHumanAge', which accepts an arrays of dog's ages ('ages'), and does the following things in order:
 
-1. Calculate the dog age in human years using the following formula: if the dog is <= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old, humanAge = 16 + dogAge * 4.
-2. Exclude all dogs that are less than 18 human years old (which is the same as keeping dogs that are at least 18 years old)
-3. Calculate the average human age of all adult dogs (you should already know from other challenges how we calculate averages 😉)
-4. Run the function for both test datasets
+// 1. Calculate the dog age in human years using the following formula: if the dog is <= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old, humanAge = 16 + dogAge * 4.
+// 2. Exclude all dogs that are less than 18 human years old (which is the same as keeping dogs that are at least 18 years old)
+// 3. Calculate the average human age of all adult dogs (you should already know from other challenges how we calculate averages 😉)
+// 4. Run the function for both test datasets
 
-TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
-TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+// TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+// TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 
-*/
+// */
 
-const calcAverageHumanAge = (ages) => {
-  const humanAges = ages.map((age) =>
-    age <= 2 ? 2 * age : 16 + age * 4
-  );
+// const calcAverageHumanAge = (ages) => {
+//   const humanAges = ages.map((age) =>
+//     age <= 2 ? 2 * age : 16 + age * 4
+//   );
 
-  const adults = humanAges.filter((age) => age >= 18);
+//   const adults = humanAges.filter((age) => age >= 18);
 
-  if (adults.length === 0) {
-    return 0;
-  }
+//   if (adults.length === 0) {
+//     return 0;
+//   }
 
-  const average =
-    adults.reduce((acc, age) => acc + age, 0) /
-    adults.length;
+//   const average =
+//     adults.reduce((acc, age) => acc + age, 0) /
+//     adults.length;
 
-  // const average = adults.reduce((acc, age, i, arr) => acc + age / arr.length)
-  // (2 + 3) / 2 === 2/2 + 3/2
+//   // const average = adults.reduce((acc, age, i, arr) => acc + age / arr.length)
+//   // (2 + 3) / 2 === 2/2 + 3/2
 
-  return average;
-};
+//   return average;
+// };
 
-console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
-console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+// console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+// console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
 
-//......................chaining methods
+// //......................chaining methods
 
-const totalDepositsUSD = movements
-  .filter((mov) => mov > 0)
-  .map((mov) => mov * eurToUsd)
-  .reduce((acc, mov) => acc + mov, 0);
+// const totalDepositsUSD = movements
+//   .filter((mov) => mov > 0)
+//   .map((mov) => mov * eurToUsd)
+//   .reduce((acc, mov) => acc + mov, 0);
 
-console.log(totalDepositsUSD);
+// console.log(totalDepositsUSD);
 
-// we can only a method after another one if the first one returns an array
+// // we can only a method after another one if the first one returns an array
 
-//........................................find method
+// //........................................find method
 
-const firstWhithdrawal = movements.find((mov) => mov < 0);
-//callback function that returns a boolean. find returns the first element in an array that satisfies the condition
+// const firstWhithdrawal = movements.find((mov) => mov < 0);
+// //callback function that returns a boolean. find returns the first element in an array that satisfies the condition
 
-console.log(firstWhithdrawal);
+// console.log(firstWhithdrawal);
 
-const account1 = {
-  owner: 'Jonas Schmedtmann',
-  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
-  interestRate: 1.2, // %
-  pin: 1111,
-};
+// const account1 = {
+//   owner: 'Jonas Schmedtmann',
+//   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+//   interestRate: 1.2, // %
+//   pin: 1111,
+// };
 
-const account2 = {
-  owner: 'Jessica Davis',
-  movements: [
-    5000, 3400, -150, -790, -3210, -1000, 8500, -30,
-  ],
-  interestRate: 1.5,
-  pin: 2222,
-};
+// const account2 = {
+//   owner: 'Jessica Davis',
+//   movements: [
+//     5000, 3400, -150, -790, -3210, -1000, 8500, -30,
+//   ],
+//   interestRate: 1.5,
+//   pin: 2222,
+// };
 
-const account3 = {
-  owner: 'Steven Thomas Williams',
-  movements: [200, -200, 340, -300, -20, 50, 400, -460],
-  interestRate: 0.7,
-  pin: 3333,
-};
+// const account3 = {
+//   owner: 'Steven Thomas Williams',
+//   movements: [200, -200, 340, -300, -20, 50, 400, -460],
+//   interestRate: 0.7,
+//   pin: 3333,
+// };
 
-const account4 = {
-  owner: 'Sarah Smith',
-  movements: [430, 1000, 700, 50, 90],
-  interestRate: 1,
-  pin: 4444,
-};
+// const account4 = {
+//   owner: 'Sarah Smith',
+//   movements: [430, 1000, 700, 50, 90],
+//   interestRate: 1,
+//   pin: 4444,
+// };
 
-const accounts = [account1, account2, account3, account4];
+// const accounts = [account1, account2, account3, account4];
 
-console.log(accounts);
+// console.log(accounts);
 
-const account = accounts.find(
-  (acc) => acc.owner === 'Jessica Davis'
-);
-console.log(account);
+// const account = accounts.find(
+//   (acc) => acc.owner === 'Jessica Davis'
+// );
+// console.log(account);
 
-for (let account of accounts) {
-  if (account.owner === 'Jessica Davis')
-    console.log(account);
-}
+// for (let account of accounts) {
+//   if (account.owner === 'Jessica Davis')
+//     console.log(account);
+// }
 
-//...........some and every
+// //...........some and every
 
-const anyDeposits = movements.some((mov) => mov > 0);
-//if there is one element that satisfies the condition then it returns true
-console.log(anyDeposits); // true
+// const anyDeposits = movements.some((mov) => mov > 0);
+// //if there is one element that satisfies the condition then it returns true
+// console.log(anyDeposits); // true
 
-//.....flat and flat map
+// //.....flat and flat map
 
-const arr1 = [[1, 2, 3], [4, 5, 6], 7, 8];
-console.log(arr1.flat()); //[1,2,3,4,5,6,7,8,9]
+// const arr1 = [[1, 2, 3], [4, 5, 6], 7, 8];
+// console.log(arr1.flat()); //[1,2,3,4,5,6,7,8,9]
 
-const arrDepp = [[[1],[2],[3]], 2, 3, 4];
-console.log(arrDepp.flat(2));
+// const arrDepp = [[[1], [2], [3]], 2, 3, 4];
+// console.log(arrDepp.flat(2));
+
+// //..................sorting arrays
+
+// const owners = ['Dalila', 'Jonas', 'Zach', 'Adam'];
+// console.log(owners.sort()); //[ 'Adam', 'Dalila', 'Jonas', 'Zach' ]
+// //mutates the orginal array
+
+// console.log(movements);
+// // console.log(movements.sort());
+
+// // return < 0, A, B
+// // return > 0, B, A
+
+// // movements.sort((a,b) => {
+// //   if(a > b) return 1
+// //   if(a < b) return -1
+// // })
+// console.log(movements.sort((a, b) => a - b));
+
+// console.log(movements);
+
+// // movements.sort((a,b) => {
+// //   if(a < b) return 1
+// //   if(a > b) return -1
+// // })
+
+// console.log(movements.sort((a, b) => b - a));
+
+// console.log(movements);
+
+// //..............arrays methods practice
+
+ 

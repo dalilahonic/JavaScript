@@ -88,7 +88,7 @@ const inputClosePin = document.querySelector(
 
 const dispalyMovements = (movements) => {
   containerMovements.innerHTML = '';
-  
+
   movements.forEach((mov, i) => {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
@@ -119,4 +119,71 @@ foo
   });
 };
 
-dispalyMovements(account1.movements);
+
+const calcDisplayBalance = (movements) => {
+  const balance = movements.reduce(
+    (acc, mov) => acc + mov,
+    0
+    );
+    labelBalance.textContent = `${balance} EUR`;
+  };
+  
+  
+  const calcDisplaySummary = (acc) => {
+    const incomes = acc.movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+    labelSumIn.textContent = `${incomes} EUR`;
+    
+    const out = acc.movements.filter((mov) => mov <0).reduce((acc, mov) => acc + mov, 0)
+    labelSumOut.textContent = `${out} EUR`
+    
+    const interest = acc.movements.filter((mov) => mov > 0).map((deposit) => deposit * acc.interestRate / 100).filter((int) => int >= 1 ).reduce((acc, int) => acc + int, 0)
+    
+    labelSumInterest.textContent = `${interest} EUR`
+  };
+  
+  
+  //.......................
+  
+  // const user = 'Steven Thomas Williams';
+  // const username = user.toLowerCase().split(' ').map((word) => word[0]).join('');
+  // console.log(username); //stw
+  
+  const createUserNames = (accs) => {
+    accs.forEach((acc) => {
+      acc.username = acc.owner
+      .toLowerCase()
+    .split(' ')
+    .map((word) => word[0])
+    .join('');
+  });
+};
+
+createUserNames(accounts);
+// console.log(accounts);
+
+//....
+
+let currentAccount;
+
+btnLogin.addEventListener('click', (e) => {
+  // prevent form from submitting 
+  e.preventDefault();
+  currentAccount = accounts.find((acc) => acc.username === inputLoginUsername.value)
+  
+  if(currentAccount?.pin === Number(inputLoginPin.value)) {
+    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ').at(0)}`
+    containerApp.style.opacity = 1;
+
+    // clear input fields
+    inputLoginPin.value = inputLoginUsername.value = '';
+    inputLoginPin.blur();
+    inputLoginUsername.blur();
+
+    dispalyMovements(currentAccount.movements);
+    calcDisplayBalance(currentAccount.movements);
+    calcDisplaySummary(currentAccount);
+  }
+  
+})
