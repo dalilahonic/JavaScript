@@ -391,19 +391,16 @@ console.log(arrDepp.flat(2)); //[ 1, 2, 3, 2, 3, 4 ]
 // );
 // // console.log(overalBalance); //17840
 
-const overalBalance = accounts.map(
-  (acc) => acc.movements
-).flat().reduce(
-  (acc, mov) => acc + mov, 0
-);
+const overalBalance = accounts
+  .map((acc) => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
 
 console.log(overalBalance); //17840
 
-const overalBalance2 = accounts.flatMap(
-  (acc) => acc.movements
-).reduce(
-  (acc, mov) => acc + mov, 0
-);
+const overalBalance2 = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
 
 console.log(overalBalance2); //17840
 
