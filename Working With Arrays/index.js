@@ -357,15 +357,57 @@ const anyDeposits = movements.some((mov) => mov > 0);
 //if there is one element that satisfies the condition then it returns true
 console.log(anyDeposits); // true
 
-//.....flat and flat map
+// EVERY
+// every only returns true if all of the elements in the array satisfy the condition that we pass in
+
+console.log(movements.every((mov) => mov > 0)); // false
+console.log(account4.movements.every((mov) => mov > 0)); // true
+
+// Seperate callback
+
+const deposit = (mov) => mov > 0;
+console.log(movements.some(deposit)); //true
+console.log(movements.every(deposit)); // false
+console.log(movements.filter(deposit)); //[ 200, 450, 3000, 70, 1300 ]
+
+// .....flat and flat map
 
 const arr1 = [[1, 2, 3], [4, 5, 6], 7, 8];
 console.log(arr1.flat()); //[1,2,3,4,5,6,7,8,9]
 
 const arrDepp = [[[1], [2], [3]], 2, 3, 4];
-console.log(arrDepp.flat(2));
+console.log(arrDepp.flat(2)); //[ 1, 2, 3, 2, 3, 4 ]
 
-//..................sorting arrays
+// const accountMovements = accounts.map(
+//   (acc) => acc.movements
+// );
+// // console.log(accountMovements);
+
+// const allMovements = accountMovements.flat();
+// // console.log(allMovements);
+
+// const overalBalance = allMovements.reduce(
+//   (acc, mov) => acc + mov, 0
+// );
+// // console.log(overalBalance); //17840
+
+const overalBalance = accounts.map(
+  (acc) => acc.movements
+).flat().reduce(
+  (acc, mov) => acc + mov, 0
+);
+
+console.log(overalBalance); //17840
+
+const overalBalance2 = accounts.flatMap(
+  (acc) => acc.movements
+).reduce(
+  (acc, mov) => acc + mov, 0
+);
+
+console.log(overalBalance2); //17840
+
+// ..................sorting arrays
 
 const owners = ['Dalila', 'Jonas', 'Zach', 'Adam'];
 console.log(owners.sort()); //[ 'Adam', 'Dalila', 'Jonas', 'Zach' ]
