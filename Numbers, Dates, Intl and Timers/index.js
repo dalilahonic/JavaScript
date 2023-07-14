@@ -19,13 +19,13 @@ console.log(Number.parseInt(23.23)); // 23
 console.log(Number.parseInt('2.5rem')); //2
 console.log(Number.parseFloat('2.5rem')); //2.5
 
-parseFloat("3.14");  // returns 3.14
-parseFloat("3.14abc");  // returns 3.14
-parseFloat("abc");  // returns NaN
+parseFloat('3.14'); // returns 3.14
+parseFloat('3.14abc'); // returns 3.14
+parseFloat('abc'); // returns NaN
 
 //parseFloat is a function that parses a string argument and returns a floating-point number.
 // It attempts to convert a portion of the input string into a number and stops parsing when it encounters an invalid character.
-//The function ignores leading whitespace and stops parsing at the first non-numeric character (excluding the decimal point). 
+//The function ignores leading whitespace and stops parsing at the first non-numeric character (excluding the decimal point).
 //If the string does not contain any valid numeric characters, parseFloat returns NaN (Not a Number).
 
 // isNaN
@@ -36,7 +36,7 @@ console.log(Number.isNaN('30e')); // false
 console.log(Number.isNaN(+'30e')); // true
 console.log(Number.isNaN(23 / 0)); // false
 
-console.log(isNaN('string')) // true
+console.log(isNaN('string')); // true
 console.log(Number.isNaN('string')); // false
 
 // isFinite
@@ -51,7 +51,7 @@ console.log(Number.isInteger(23)); // true
 console.log(Number.isInteger(23.0)); // true
 console.log(Number.isInteger(23 / 0)); // false
 
-// Math and Rounding 
+// Math and Rounding
 
 console.log(Math.sqrt(25)); //5
 // square root
@@ -71,7 +71,8 @@ console.log(Math.PI * Number.parseFloat('10px') ** 2);
 console.log(Math.trunc(Math.random() * 6) + 1);
 // Math.random() gives us the number between 0 and 1. Math.trunc() removes the decimal part
 
-const randomInt = (min, max) => Math.floor(Math.random() * (max - min) + 1) + min;
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min) + 1) + min;
 console.log(randomInt(10, 20));
 
 // Rounding integers
@@ -103,3 +104,32 @@ console.log((2.7).toFixed(0)); // 3
 // toFixed returns a string
 console.log((2.7).toFixed(3)); // 2.700
 console.log(+(2.7).toFixed(3)); // 2.7 (number)
+
+//...................Remainder operator
+
+console.log(5 % 2); // 1
+// 5 = 2 * 2 + 1
+// 8 = 2 * 3 + 2
+
+const isEven = n => n % 2 === 0;
+console.log(isEven(8)); // true
+console.log(isEven(25)); // false
+
+// labelBalance.addEventListener('click', function () {
+//     [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+//       // 0, 2, 4, 6
+//       if (i % 2 === 0) row.style.backgroundColor = 'orangered';
+//       // 0, 3, 6, 9
+//       if (i % 3 === 0) row.style.backgroundColor = 'blue';
+//     });
+//   });
+  
+//...........Numeric Seperators
+
+// 287,460,000,000
+// const diametar = 287460000000;
+const diametar = 287_460_000_000;
+console.log(diametar); // 287460000000
+
+const priceCents = 345_99;
+

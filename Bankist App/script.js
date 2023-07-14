@@ -132,7 +132,7 @@ const dispalyMovements = (movements, sort = false) => {
       <div class="movements__type movements__type--${type}">
       ${i + 1} ${type}
     </div>
-      <div class="movements__value">${mov} ${type}</div>
+      <div class="movements__value">${mov.toFixed(2)} ${type}</div>
     </div>
         `;
 
@@ -160,7 +160,7 @@ const calcDisplayBalance = (acc) => {
     0
   );
   acc.balance = balance;
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance.toFixed(2)} EUR`;
 };
 
 // const calcDisplaySummary = (acc) => {
@@ -323,7 +323,8 @@ btnTransfer.addEventListener('click', (e) => {
 btnLoan.addEventListener('click', (e) => {
   e.preventDefault();
 
-  const amount = +inputLoanAmount.value;
+  const amount = Math.floor(inputLoanAmount.value);
+
   if (
     amount > 0 &&
     currentAccount.movements.some(

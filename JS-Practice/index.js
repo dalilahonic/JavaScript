@@ -295,7 +295,7 @@ function isIsogram5(str) {
     return arr.indexOf(num) === i;
   });
 
-  return uniques.length === str.length ? true : false
+  return uniques.length === str.length ? true : false;
 }
 
 // ...............................................................
@@ -325,6 +325,18 @@ function filterArr(arr) {
 
 console.log(filterArr([1, 2, 'a', 'b']));
 
+// SOLUTION #2
+
+function filterArr2(arr) {
+  return arr.filter((el) => typeof el === 'number');
+}
+
+// function filterArr3(arr) {
+//   return arr.filter((el) => Number.isInteger(el))
+// }
+
+console.log(filterArr2([1, 2, 'a', 'b']));
+
 //..............................................
 
 //given a string of words, return the length of the shortest word(s).
@@ -340,6 +352,24 @@ function shortestWord(str) {
 }
 
 console.log(shortestWord('this is some sentence'));
+
+// SOLUTION #2
+
+function shortestWord2(str) {
+  str = str.split(' ').map((s) => s.length);
+
+  return Math.min(...str);
+}
+
+// SOLUTION #3
+
+function shortestWord3(str) {
+  return str
+    .split(' ')
+    .sort((a, b) => b.length - a.length)
+    .pop().length;
+}
+
 //...................................................................
 
 // Given two integers a and b, which can be positive or negative, find the sum of all the integers between and including them and return it. If the two numbers are equal return a or b.
