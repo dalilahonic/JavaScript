@@ -374,15 +374,37 @@ function shortestWord3(str) {
 
 // Given two integers a and b, which can be positive or negative, find the sum of all the integers between and including them and return it. If the two numbers are equal return a or b.
 
-function sumOfNumsInBetween(a, b) {
+// function sumOfNumsInBetween(a, b) {
+//   if (a === b) return a;
+//   let sum = 0;
+//   if (a > b) {
+//     for (let i = b; i <= a; i++) {
+//       sum += i;
+//     }
+//   } else {
+//     for (let i = a; i <= b; i++) {
+//       sum += i;
+//     }
+//   }
+
+//   return sum
+// }
+
+function sumOfNumsInBetween2(a, b) {
+  if (a === b) return a;
+
+  const start = Math.min(a, b);
+  const end = Math.max(a, b);
+
   let sum = 0;
-  for (let i = a; i <= b; i++) {
+  for (let i = start; i <= end; i++) {
     sum += i;
   }
+
   return sum;
 }
 
-console.log(sumOfNumsInBetween(2, 4));
+console.log(sumOfNumsInBetween2(2, 4));
 
 //..................................................................
 
@@ -946,7 +968,7 @@ blueabcdef   ("      10)  concatenation of strarr[3] and strarr[4]
 abcdefuvwxyz ("      12)  concatenation of strarr[4] and strarr[5]
 
 Two strings are the longest: "folingtrashy" and "abcdefuvwxyz".
-The first that came is "folingtrashy" so 
+The first that came is "folingtrashy" so
 longest_consec(strarr, 2) should return "folingtrashy".
 */
 
@@ -1060,3 +1082,17 @@ console.log(
     `No offense but, Your writing is among the worst I've ever read`
   )
 );
+
+//...............................
+// create all permutations of a non-empty input string and remove duplicates, if present.
+// Create as many "shufflings" as you can!
+// Examples:
+//With input 'a':
+// Your function should return: ['a']
+// With input 'ab':
+// Your function should return ['ab', 'ba']
+// With input 'abc':z
+// Your function should return ['abc','acb','bac','bca','cab','cba']
+
+//...........................................
+
