@@ -770,6 +770,293 @@ console.log(spinWords('This is another test'));
 
 // ...............................................................
 
-//Create a function that returns the sum of the two lowest positive numbers given an arr of minimum 4 positive integers. No floats or non-positive integers will be passed.
+// It must start with a hashtag (#).
+// All words must have their first letter capitalized.
+// If the final result is longer than 140 chars it must return false.
+// If the input or the result is an empty string it must return false.
 
+function generateHashtag(str) {
+  str = str
+    .split(' ')
+    .map((s) => {
+      word = '';
+      for (let i = 0; i < s.length; i++) {
+        if (i === 0) word += s[i].toUpperCase();
+        else word += s[i];
+      }
+      return word;
+    })
+    .join('');
+
+  if (str !== '') str = '#' + str;
+
+  if (str.length > 140) return false;
+
+  return str || false;
+}
+
+console.log(generateHashtag('this is a sentance'));
+console.log(generateHashtag(''));
+
+// SOLUTION #2
+
+function generateHashtag2(str) {
+  //if(!str || str.length < 1) return false;
+  str =
+    '#' +
+    str
+      .split(' ')
+      .map((s) => s.at(0).toUpperCase() + s.slice(1))
+      .join('');
+
+  if (str.length > 140 || str === '#') return false;
+
+  //return r.length > 140?false:r;
+  return str;
+}
+
+console.log(generateHashtag2('this is some'));
+
+// SOLUTION #3
+
+function generateHashtag3(str) {
+  if (str === '') return false;
+  str = str
+    .split(' ')
+    .reduce(
+      (acc, word) =>
+        acc + word[0].toUpperCase() + word.slice(1),
+      '#'
+    );
+  return str > 140 ? false : str;
+}
+
+console.log(generateHashtag3('this is again'));
+console.log(generateHashtag3(''));
+
+// const generateHashtag = str => (s = '#'+str.trim().split(' ').map(e=>e[0].toUpperCase() + e.substring(1,e.length).toLowerCase()).join('')).length > 1 && s.length <= 140 ? s : false
+//..............................................
+
+//The directions given to the man are, for example, the following
+// ["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"].
+// or
+// { "NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST" };
+// or
+// [North, South, South, East, West, North, West]
+//You can immediately see that going "NORTH" and immediately "SOUTH" is not reasonable, better stay to the same place! So the task is to give to the man a simplified version of the plan. A better plan in this case is simply:
+//Write a function dirReduc which will take an array of strings and returns an array of strings with the needless directions removed (W<->E or S<->N side by side).
+
+// function dirReduce(arr) {
+//   console.log(arr);
+// }
+
+// console.log(dirReduce([1, 2, 3]));
+
+//...........................................................
+
+//Create a function that returns the sum of the two lowest positive numbers given an arr of minimum 4 positive integers. No floats or non-positive integers will be passed.
 // For example, when an arr is passed like [19, 5, 42, 2, 77], the output should be 7.
+
+function sumOfTwoLowest(arr) {
+  let mins = [];
+  while (mins.length <= 1) {
+    let smallestNum = Math.min(...arr);
+    mins.push(smallestNum);
+    arr.splice(arr.indexOf(smallestNum), 1);
+  }
+  return mins.reduce((acc, num) => acc + num);
+}
+
+console.log(sumOfTwoLowest([1, 2, 3, 4, 5]));
+
+// SOLUTION #2
+
+function sumOfTwoLowest2(arr) {
+  arr.sort((a, b) => a - b);
+  //.slice(0, 2).reduce((a, b) => a + b);
+  return arr[0] + arr[1];
+
+  // let [ a, b ] = numbers.sort((a, b) => a - b)
+  // return a + b
+}
+
+// function sumTwoSmallestNumbers(numbers) {
+//   let min = Number.MAX_SAFE_INTEGER;
+//   let secondMin = Number.MAX_SAFE_INTEGER;
+
+//   let n;
+//   for (i = 0; i < numbers.length; i++) {
+//     n = numbers[i];
+//   	if(n < min) {
+//     	secondMin = min;
+//       min = n;
+//     } else if( n < secondMin ) {
+//     	secondMin = n;
+//     }
+//   }
+
+//   return min + secondMin;
+// }
+
+// function sumTwoSmallestNumbers(numbers) {
+//   let lowest = numbers.sort(function(a, b){return b-a}).slice(-2);
+//   return lowest.pop() + lowest.pop();
+// };
+
+//............................................................
+//You are given an array (which will have a length of at least 3, but could be very large) containing integers. The array is either entirely comprised of odd integers or entirely comprised of even integers except for a single integer N. Write a method that takes the array as an argument and returns this "outlier" N.
+//[2, 4, 0, 100, 4, 11, 2602, 36]
+// Should return: 11 (the only odd number)
+// [160, 3, 1719, 19, 11, 13, -21]
+// Should return: 160 (the only even number)
+
+function findOutlier(arr) {
+  let odds = [];
+  let even = [];
+
+  arr.forEach((a) => {
+    a % 2 === 0 ? even.push(a) : odds.push(a);
+  });
+
+  return odds.length > 1 ? even[0] : odds[0];
+}
+
+console.log(findOutlier([12, 43, 32, 78, 4, 2]));
+
+// SOLUTION #2
+
+function findOutlier2(arr) {
+  let even = arr.filter((a) => a % 2 == 0);
+  let odd = arr.filter((a) => a % 2 !== 0);
+  return even.length === 1 ? even[0] : odd[0];
+}
+
+//......................................................
+
+//You are given an array(list) strarr of strings and an integer k. Your task is to return the first longest string consisting of k consecutive strings taken in the array.
+/*
+strarr = ["tree", "foling", "trashy", "blue", "abcdef", "uvwxyz"], k = 2
+
+Concatenate the consecutive strings of strarr by 2, we get:
+
+treefoling   (length 10)  concatenation of strarr[0] and strarr[1]
+folingtrashy ("      12)  concatenation of strarr[1] and strarr[2]
+trashyblue   ("      10)  concatenation of strarr[2] and strarr[3]
+blueabcdef   ("      10)  concatenation of strarr[3] and strarr[4]
+abcdefuvwxyz ("      12)  concatenation of strarr[4] and strarr[5]
+
+Two strings are the longest: "folingtrashy" and "abcdefuvwxyz".
+The first that came is "folingtrashy" so 
+longest_consec(strarr, 2) should return "folingtrashy".
+*/
+
+function longestConsec(starr, k) {
+  if (k <= 0 || k > starr.length) {
+    return '';
+  }
+
+  let strings = [];
+  for (let i = 0; i < starr.length; i++) {
+    let indexOfCurrentElement = starr.indexOf(starr[i]);
+    let str = '';
+    for (
+      let i = indexOfCurrentElement;
+      i < indexOfCurrentElement + k;
+      i++
+    ) {
+      str += starr[i];
+    }
+    if (str.includes('undefined')) continue;
+    strings.push(str);
+  }
+
+  // let longest = strings[0];
+  // for (let str of strings)
+  //   if (str.length > longest.length) longest = str;
+
+  // return longest;
+
+  return strings.reduce((acc, str) => {
+    if (str > acc) return str;
+    else return acc;
+  }, strings[0]);
+}
+
+console.log(
+  longestConsec(
+    [
+      'tree',
+      'foling',
+      'trashy',
+      'blue',
+      'abcdef',
+      'uvwxyz',
+    ],
+    2
+  )
+);
+console.log(
+  longestConsec(
+    ['zone', 'abigail', 'theta', 'form', 'libe', 'zas'],
+    2
+  )
+);
+
+//........................................
+
+//write a function so that it converts dash/underscore delimited words into camel casing. The first word within the output should be capitalized only if the original word was capitalized (known as Upper Camel Case, also often referred to as Pascal case). The next words should be always capitalized.
+// Examples
+// "the-stealth-warrior" gets converted to "theStealthWarrior"
+// "The_Stealth_Warrior" gets converted to "TheStealthWarrior"
+// "The_Stealth-Warrior" gets converted to "TheStealthWarrior"
+//expected 'the_pippi_wasPippi' to equal 'thePippiWasPippi'
+
+function toCamelCase(str) {
+  if (str === '') return '';
+  return (str = str
+    .replaceAll('-', '_')
+    .split('_')
+    .map((s, i) => {
+      if (i !== 0) {
+        return (
+          s[0].toUpperCase() + s.slice(1).toLowerCase()
+        );
+      } else return s[0] + s.slice(1);
+    })
+    .join(''));
+}
+
+// function toCamelCase(str){
+//   if (str === '') return '';
+//  str = str.replaceAll('-', '_').split('_')
+//    return str.map((w, i) => (i > 0 ? w.charAt(0).toUpperCase() : w.charAt(0)) + w.slice(1)).join('');
+// }
+
+console.log(toCamelCase('the-stealth-warrior'));
+console.log(toCamelCase('a_pippi_wasKawaii'));
+console.log(toCamelCase('ACat_was_Pippi'));
+console.log(toCamelCase('the_pippi_wasPippi'));
+
+//.........................................
+
+// Your task is to write a function that takes a string and return a new string with all vowels removed.
+// For example, the string "This website is for losers LOL!" would become "Ths wbst s fr lsrs LL!".
+
+function disemvowel(str) {
+  let vowels = ['a', 'e', 'i', 'o', 'u'];
+
+  for (let i = 0; i < str.length; i++) {
+    if (vowels.includes(str[i].toLowerCase())) {
+      str = str.replace(str[i], '');
+      i--;
+    }
+  }
+
+  return str;
+}
+
+console.log(
+  disemvowel(
+    `No offense but, Your writing is among the worst I've ever read`
+  )
+);
