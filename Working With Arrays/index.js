@@ -434,3 +434,16 @@ console.log(movements.sort((a, b) => b - a));
 console.log(movements);
 
 //..............arrays methods practice
+
+const bankDepositSum = accounts
+  .flatMap((acc) => acc.movements)
+  .filter((mov) => mov > 0)
+  .reduce((acc, cur) => acc + cur, 0);
+console.log(bankDepositSum);
+
+// 2.
+const numDeposits1000 = accounts.flatMap((acc) => acc.movements).filter((mov) => mov > 1000).length;
+console.log(numDeposits1000);
+
+// 6 46
+

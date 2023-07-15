@@ -133,3 +133,68 @@ console.log(diametar); // 287460000000
 
 const priceCents = 345_99;
 
+//.................Working with BigInt
+
+// biggerst number that javascript can represent
+console.log(2 ** 53 - 1); // 9007199254740991
+console.log(Number.MAX_SAFE_INTEGER);
+
+// if we do calculations with numbers that are bigger than this we might lose precision
+
+
+console.log(24356432234345435435345345435454252353235n);
+// console.log(BigInt(24356432234345435435345345435454252353235n));
+// this n transforms a regular number into a BigInt number
+
+// Operations
+// operators work just the same with BigInt
+console.log(100000n + 12142n);
+// console.log(Math.sqrt(16n)); // does not work
+
+// it is not possible to mix BigInts with regular numbers. however, there are 2 exceptions to this which are the comparison operators and plus operator when working with strings
+
+// Exceptions
+console.log(20n > 12); // true
+console.log(20n === 20); // false
+console.log(20n == 20); // true
+console.log(20n == '20'); // true
+
+// Divisions
+
+console.log(10n / 3n); //3n
+// it just cuts off the decimal part
+console.log(10 / 3); //3.3333333333333335
+
+//..................Creating Dates
+
+const now = new Date();
+console.log(now);
+
+console.log(new Date('January 9, 2024'));
+// this is unreliable. if javascript creates these dates then it is fine
+
+console.log(new Date(2023, 3, 4, 12, 43, 42));
+// year, month, day, hours, minutes, seconds
+// month in js is 0 based.
+
+console.log(new Date(0));
+console.log(new Date(3 * 24 * 60 * 60 * 1000));
+
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future);
+console.log(future.getFullYear());
+console.log(future.getMonth());
+console.log(future.getDate()); // day of the month
+console.log(future.getDay());
+console.log(future.getHours());
+console.log(future.getMinutes());
+console.log(future.getSeconds());
+console.log(future.toISOString());
+console.log(future.getTime()); 
+
+console.log(new Date(2142256980000));
+
+console.log(Date.now());
+
+future.setFullYear(2040);
+console.log(future);
