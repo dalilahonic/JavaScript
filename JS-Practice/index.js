@@ -450,6 +450,15 @@ const greatestDistance = function (data) {
 
 console.log(greatestDistance([1, 2, 3, 4, 5, 1]));
 
+// SOLUTION #3
+
+function greatestDistance2(arr) {
+  return arr.reduce(
+    (acc, el, i) => Math.max(arr.lastIndexOf(el) - i, acc),
+    0
+  );
+}
+
 //...........................................
 //Write a function that checks if a given string (case insensitive) is a palindrome. A palindrome is a word, number, phrase, or other sequence of symbols that reads the same backwards as forwards, such as madam or racecar, the date and time 12/21/33 12:21, and the sentence: "A man, a plan, a canal – Panama".
 
@@ -859,23 +868,6 @@ console.log(generateHashtag3(''));
 // const generateHashtag = str => (s = '#'+str.trim().split(' ').map(e=>e[0].toUpperCase() + e.substring(1,e.length).toLowerCase()).join('')).length > 1 && s.length <= 140 ? s : false
 //..............................................
 
-//The directions given to the man are, for example, the following
-// ["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"].
-// or
-// { "NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST" };
-// or
-// [North, South, South, East, West, North, West]
-//You can immediately see that going "NORTH" and immediately "SOUTH" is not reasonable, better stay to the same place! So the task is to give to the man a simplified version of the plan. A better plan in this case is simply:
-//Write a function dirReduc which will take an array of strings and returns an array of strings with the needless directions removed (W<->E or S<->N side by side).
-
-// function dirReduce(arr) {
-//   console.log(arr);
-// }
-
-// console.log(dirReduce([1, 2, 3]));
-
-//...........................................................
-
 //Create a function that returns the sum of the two lowest positive numbers given an arr of minimum 4 positive integers. No floats or non-positive integers will be passed.
 // For example, when an arr is passed like [19, 5, 42, 2, 77], the output should be 7.
 
@@ -957,20 +949,20 @@ function findOutlier2(arr) {
 
 //You are given an array(list) strarr of strings and an integer k. Your task is to return the first longest string consisting of k consecutive strings taken in the array.
 /*
-strarr = ["tree", "foling", "trashy", "blue", "abcdef", "uvwxyz"], k = 2
-
-Concatenate the consecutive strings of strarr by 2, we get:
-
-treefoling   (length 10)  concatenation of strarr[0] and strarr[1]
-folingtrashy ("      12)  concatenation of strarr[1] and strarr[2]
-trashyblue   ("      10)  concatenation of strarr[2] and strarr[3]
-blueabcdef   ("      10)  concatenation of strarr[3] and strarr[4]
-abcdefuvwxyz ("      12)  concatenation of strarr[4] and strarr[5]
-
-Two strings are the longest: "folingtrashy" and "abcdefuvwxyz".
-The first that came is "folingtrashy" so
-longest_consec(strarr, 2) should return "folingtrashy".
-*/
+  strarr = ["tree", "foling", "trashy", "blue", "abcdef", "uvwxyz"], k = 2
+  
+  Concatenate the consecutive strings of strarr by 2, we get:
+  
+  treefoling   (length 10)  concatenation of strarr[0] and strarr[1]
+  folingtrashy ("      12)  concatenation of strarr[1] and strarr[2]
+  trashyblue   ("      10)  concatenation of strarr[2] and strarr[3]
+  blueabcdef   ("      10)  concatenation of strarr[3] and strarr[4]
+  abcdefuvwxyz ("      12)  concatenation of strarr[4] and strarr[5]
+  
+  Two strings are the longest: "folingtrashy" and "abcdefuvwxyz".
+  The first that came is "folingtrashy" so
+  longest_consec(strarr, 2) should return "folingtrashy".
+  */
 
 function longestConsec(starr, k) {
   if (k <= 0 || k > starr.length) {
@@ -1083,16 +1075,130 @@ console.log(
   )
 );
 
-//...............................
+//.............................................................
+
+// Well met with Fibonacci bigger brother, AKA Tribonacci.
+// As the name may already reveal, it works basically like a Fibonacci, but summing the last 3 (instead of 2) numbers of the sequence to generate the next. And, worse part of it, regrettably I won't get to hear non-native Italian speakers trying to pronounce it :(
+// So, if we are to start our Tribonacci sequence with [1, 1, 1] as a starting input (AKA signature), we have this sequence:
+// [1, 1 ,1, 3, 5, 9, 17, 31, ...]
+// But what if we started with [0, 0, 1] as a signature? As starting with [0, 1] instead of [1, 1] basically shifts the common Fibonacci sequence by once place, you may be tempted to think that we would get the same sequence shifted by 2 places, but that is not the case and we would get:
+// [0, 0, 1, 1, 2, 4, 7, 13, 24, ...]
+// Well, you may have guessed it by now, but to be clear: you need to create a fibonacci function that given a signature array/list, returns the first n elements - signature included of the so seeded sequence.
+// Signature will always contain 3 numbers; n will always be a non-negative number; if n == 0, then return an empty array (except in C return NULL) and be ready for anything else which is not clearly specified ;)
+
+function tribonacci(signature, n) {
+  if (n === 0) return [];
+  if (n < signature.length) {
+    let arr = [];
+    for (let i = 0; i < n; i++) {
+      arr.push(signature[i]);
+    }
+    return arr;
+  }
+
+  let sum = 0;
+  for (
+    let i = signature.length - 1;
+    i >= signature.length - 3;
+    i--
+  ) {
+    sum += signature[i];
+  }
+  signature.push(sum);
+
+  return signature.length === n
+    ? signature
+    : tribonacci(signature, n);
+}
+
+console.log(tribonacci([1, 1, 2], 10));
+console.log(tribonacci([1, 1, 1], 1));
+
+//..........................
+// Your job is to write a function which increments a string, to create a new string.
+// If the string already ends with a number, the number should be incremented by 1.
+// If the string does not end with a number. the number 1 should be appended to the new string.
+// Examples:
+// foo -> foo1
+// foobar23 -> foobar24
+// foo0042 -> foo0043
+// foo9 -> foo10
+// foo099 -> foo100
+
+// function incrementString(str) {
+//   lastCharacter = str.slice(-1);
+//   indexOfLastCharacter = str.lastIndexOf(lastCharacter);
+
+//   let num = Number(lastCharacter);
+
+//   if (isNaN(num) === false) {
+//     num++;
+//     str = str.slice(0, str.length - 1) + num;
+//   } else {
+//     str = str.slice(0, str.length - 1) + 1;
+//   }
+
+//   return str;
+// }
+
+// console.log(incrementString('fsds1'));
+// console.log(incrementString('fsds'));
+
+// let thisd = 's';
+// thisd =Number(thisd),
+// console.log( isNaN(thisd));
+// ...............................
 // create all permutations of a non-empty input string and remove duplicates, if present.
 // Create as many "shufflings" as you can!
 // Examples:
-//With input 'a':
+// With input 'a':
 // Your function should return: ['a']
 // With input 'ab':
 // Your function should return ['ab', 'ba']
 // With input 'abc':z
 // Your function should return ['abc','acb','bac','bca','cab','cba']
 
-//...........................................
+// function permutations(str) {
+//   str = str.split('');
+//   let permutationsArr = [];
 
+//   for (let i = 0; i < str.length; i++) {
+//     let permutation = '';
+//     permutation += str[i];
+
+//     for (let x = 0; x < str.length; x++) {
+//       if (i !== x) {
+//         permutation += str[x];
+//       }
+//     }
+//     permutationsArr.push(permutation);
+//   }
+
+//   return permutationsArr;
+// }
+
+// console.log(permutations('abcd'));
+
+// ...........................................
+
+//The directions given to the man are, for example, the following
+// ["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"].
+// or
+// { "NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST" };
+// or
+// [North, South, South, East, West, North, West]
+//You can immediately see that going "NORTH" and immediately "SOUTH" is not reasonable, better stay to the same place! So the task is to give to the man a simplified version of the plan. A better plan in this case is simply:
+//Write a function dirReduc which will take an array of strings and returns an array of strings with the needless directions removed (W<->E or S<->N side by side).
+
+// function dirReduce(arr) {
+//   console.log(arr);
+// }
+
+// console.log(dirReduce([1, 2, 3]));
+
+//...........................................................
+// Write a program that performs a search for solutions to a word game. The goal of the game is to find sets of five words that share a vowel alternation. E.g., one solution to the game might be the words:
+// ['last', 'lest', 'list', 'lost', 'lust']
+// This list above is a valid solution instance since the vowels 'a', 'e', 'i', 'o', and 'u' occur in the same positions between the consonant clusters 'l' and 'st'.
+// Your program should return a list of all solutions (like the list above) given a list of words to search through.
+// Note that order matters. If you prefer to use sets for book-keeping purposes, that is fine, but you will need to sort your list of solutions, and each solution set itself.
