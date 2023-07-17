@@ -1114,6 +1114,45 @@ function tribonacci(signature, n) {
 console.log(tribonacci([1, 1, 2], 10));
 console.log(tribonacci([1, 1, 1], 1));
 
+//..................................................
+
+// Write a function named first_non_repeating_letter that takes a string input, and returns the first character that is not repeated anywhere in the string.
+
+// For example, if given the input 'stress', the function should return 't', since the letter t only occurs once in the string, and occurs first in the string.
+
+// As an added challenge, upper- and lowercase letters are considered the same character, but the function should return the correct case for the initial letter. For example, the input 'sTreSS' should return 'T'.
+
+// If a string contains all repeating characters, it should return an empty string ("") or None -- see sample tests.
+
+function firstNonRepeatingLetter(s) {
+  s = s.split('');
+  allLower = s.map((letter) => letter.toLowerCase());
+
+  for (let i = 0; i < allLower.length; i++) {
+    if (
+      allLower.indexOf(allLower[i]) ===
+      allLower.lastIndexOf(allLower[i])
+    )
+      return s[i];
+  }
+
+  return '';
+}
+
+console.log(firstNonRepeatingLetter('stress'));
+console.log(firstNonRepeatingLetter('sTreSS'));
+
+// function firstNonRepeatingLetter(s) {
+//   let str = s.toLowerCase();
+//   for(let i = 0; i < str.length; i++) {
+//     if(str.indexOf(str[i]) === str.lastIndexOf(str[i])) {
+//       return s[i];
+//     }
+//   }
+//   return "";
+// }
+
+
 //..........................
 // Your job is to write a function which increments a string, to create a new string.
 // If the string already ends with a number, the number should be incremented by 1.
@@ -1132,7 +1171,7 @@ console.log(tribonacci([1, 1, 1], 1));
 //   let num = Number(lastCharacter);
 
 //   if (isNaN(num) === false) {
-//     num++;
+  //     num++;
 //     str = str.slice(0, str.length - 1) + num;
 //   } else {
 //     str = str.slice(0, str.length - 1) + 1;
@@ -1163,7 +1202,7 @@ console.log(tribonacci([1, 1, 1], 1));
 //   let permutationsArr = [];
 
 //   for (let i = 0; i < str.length; i++) {
-//     let permutation = '';
+  //     let permutation = '';
 //     permutation += str[i];
 
 //     for (let x = 0; x < str.length; x++) {
@@ -1191,7 +1230,7 @@ console.log(tribonacci([1, 1, 1], 1));
 //Write a function dirReduc which will take an array of strings and returns an array of strings with the needless directions removed (W<->E or S<->N side by side).
 
 // function dirReduce(arr) {
-//   console.log(arr);
+  //   console.log(arr);
 // }
 
 // console.log(dirReduce([1, 2, 3]));
@@ -1202,3 +1241,17 @@ console.log(tribonacci([1, 1, 1], 1));
 // This list above is a valid solution instance since the vowels 'a', 'e', 'i', 'o', and 'u' occur in the same positions between the consonant clusters 'l' and 'st'.
 // Your program should return a list of all solutions (like the list above) given a list of words to search through.
 // Note that order matters. If you prefer to use sets for book-keeping purposes, that is fine, but you will need to sort your list of solutions, and each solution set itself.
+
+//............................................
+
+//Complete the function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false.
+// Notes:
+// Only lower case letters will be used (a-z). No punctuation or digits will be included.
+// Performance needs to be considered.
+
+
+// function scramble(str1, str2) {
+//   return [...str2].evsery((letter) => str1.includes(letter));
+// }
+
+// console.log(scramble('rkqodlw', 'world'));
