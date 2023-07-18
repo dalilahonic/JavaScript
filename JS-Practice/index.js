@@ -540,6 +540,19 @@ function breakCamelCase2(str) {
 
 console.log(breakCamelCase2('dalilaHonic'));
 
+// // SOLUTION #3
+
+function breakCamelCase3(str) {
+  return str
+    .split('')
+    .map((letter) =>
+      letter !== letter.toLowerCase()
+        ? ' ' + letter
+        : letter
+    )
+    .join('');
+}
+
 //.....................................................
 
 //Take 2 strings s1 and s2 including only letters from a to z. Return a new sorted string, the longest possible, containing distinct letters - each taken only once - coming from s1 or s2.
@@ -1152,8 +1165,155 @@ console.log(firstNonRepeatingLetter('sTreSS'));
 //   return "";
 // }
 
+//............................................................
+//Our loose definition of Vampire Numbers can be described as follows:
+// 6 * 21 = 126
+// # 6 and 21 would be valid 'fangs' for a vampire number as the
+// # digits 6, 1, and 2 are present in both the product and multiplicands
 
-//..........................
+// 10 * 11 = 110
+// # 110 is not a vampire number since there are three 1's in the
+// # multiplicands, but only two 1's in the product
+// Create a function that can receive two 'fangs' and determine if the product of the two is a valid vampire number.
+
+function vampireTest(a, b) {
+  if (a === 0 && b === 0) return false;
+
+  let result = Array.from(String(a * b));
+  // let result = [...String(a * b)];
+  let fangs = [...String(a), ...String(b)];
+
+  return result.sort().join('') === fangs.sort().join('');
+
+  //return ('' + a + b).split('').sort().join('') === ('' + (a * b)).split('').sort().join('');
+}
+
+console.log(vampireTest(6, 21));
+
+//............................................................................................
+// So you have to build a method, that creates new arrays, that can be flattened!
+
+// #Shorter: You have to unflatten a list/an array.
+
+// You get an array of integers and have to unflatten it by these rules:
+
+// - You start at the first number.
+// - If this number x is smaller than 3, take this number x direct
+//   for the new array and continue with the next number.
+// - If this number x is greater than 2, take the next x numbers (inclusive this number) as a
+//   sub-array in the new array. Continue with the next number AFTER this taken numbers.
+// - If there are too few numbers to take by number, take the last available numbers.
+// The given array will always contain numbers. There will only be numbers > 0.
+
+// Example:
+
+//  [1,4,5,2,1,2,4,5,2,6,2,3,3] -> [1,[4,5,2,1],2,[4,5,2,6],2,[3,3]]
+
+// Steps:
+// 1. The 1 is added directly to the new array.
+// 2. The next number is 4. So the next 4 numbers (4,5,2,1) are added as sub-array in the new array.
+// 3. The 2 is added directly to the new array.
+// 4. The next number is 4. So the next 4 numbers (4,5,2,6) are added as sub-array in the new array.
+// 5. The 2 is added directly to the new array.
+// 6. The next number is 3. So the next 3 numbers would be taken. There are only 2,
+// so take these (3,3) as sub-array in the new array.
+
+function unflatten(flatArray) {
+  flatArray = flatArray.flat();
+  let flattenedArr = [];
+
+  for (let index = 0; index < flatArray.length; index++) {
+    const element = flatArray[index];
+
+    if (element < 3) flattenedArr.push(element);
+    else if (element > 2) {
+      let newArr = [];
+      for (let i = index; i < index + element; i++) {
+        if (flatArray[i] === undefined) break;
+        newArr.push(flatArray[i]);
+      }
+      flattenedArr.push(newArr);
+      index += element - 1;
+    }
+  }
+  return flattenedArr;
+}
+
+console.log(
+  unflatten([1, 4, 5, 2, 1, 2, 4, 5, 2, 6, 2, 3, 3])
+);
+console.log(unflatten([1, 1]));
+console.log(unflatten([[3, 1, 1, 3], 1, 1]));
+console.log(unflatten([[3, 5, 2, 1]]));
+
+// SOLUTION #2
+
+const unflatten2 = (arr) => {
+  let newArr = [];
+  while (arr.length) {
+    newArr.push(
+      arr[0] < 3 ? arr.shift() : arr.splice(0, arr[0])
+    );
+  }
+  return newArr;
+};
+
+// SOLUTION #3
+
+function unflatten3(arr) {
+  return arr.reduce((acc, element, index, array) => {
+    if (element < 3) acc.push(element);
+    else acc.push(array.splice(index, element, null));
+    return acc;
+  }, []);
+}
+
+//.................................................................
+
+// Write an algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.
+// moveZeros([false,1,0,1,2,0,1,3,"a"]) // returns[false,1,1,2,1,3,"a",0,0]
+
+function moveZeros(arr) {
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (arr[i] === 0) {
+      arr.splice(i, 1);
+      arr.push(0);
+    }
+  }
+  return arr;
+}
+
+// SOLTUION #2
+
+function moveZeros2(arr) {
+  return arr
+    .filter((el) => el !== 0)
+    .concat(arr.filter((el) => el === 0));
+}
+
+console.log(moveZeros([false, 1, 0, 1, 2, 0, 1, 3, 'a']));
+console.log(
+  moveZeros([
+    9, +0, 9, 1, 2, 1, 1, 3, 1, 9, +0, +0, 9, +0, +0, +0,
+    +0, +0, +0, +0,
+  ])
+);
+
+// SOLUTION #3
+
+function moveZeros3(arr) {
+  zeros = [];
+  nums = [];
+  arr.forEach((el) => {
+    if(el === 0) zeros.push(el)
+    else nums.push(el)
+  })
+
+  return nums.concat(zeros)
+}
+
+//...........................................................................
+
 // Your job is to write a function which increments a string, to create a new string.
 // If the string already ends with a number, the number should be incremented by 1.
 // If the string does not end with a number. the number 1 should be appended to the new string.
@@ -1171,7 +1331,7 @@ console.log(firstNonRepeatingLetter('sTreSS'));
 //   let num = Number(lastCharacter);
 
 //   if (isNaN(num) === false) {
-  //     num++;
+//     num++;
 //     str = str.slice(0, str.length - 1) + num;
 //   } else {
 //     str = str.slice(0, str.length - 1) + 1;
@@ -1202,7 +1362,7 @@ console.log(firstNonRepeatingLetter('sTreSS'));
 //   let permutationsArr = [];
 
 //   for (let i = 0; i < str.length; i++) {
-  //     let permutation = '';
+//     let permutation = '';
 //     permutation += str[i];
 
 //     for (let x = 0; x < str.length; x++) {
@@ -1230,7 +1390,7 @@ console.log(firstNonRepeatingLetter('sTreSS'));
 //Write a function dirReduc which will take an array of strings and returns an array of strings with the needless directions removed (W<->E or S<->N side by side).
 
 // function dirReduce(arr) {
-  //   console.log(arr);
+//   console.log(arr);
 // }
 
 // console.log(dirReduce([1, 2, 3]));
@@ -1248,7 +1408,6 @@ console.log(firstNonRepeatingLetter('sTreSS'));
 // Notes:
 // Only lower case letters will be used (a-z). No punctuation or digits will be included.
 // Performance needs to be considered.
-
 
 // function scramble(str1, str2) {
 //   return [...str2].evsery((letter) => str1.includes(letter));
