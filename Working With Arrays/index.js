@@ -439,11 +439,78 @@ const bankDepositSum = accounts
   .flatMap((acc) => acc.movements)
   .filter((mov) => mov > 0)
   .reduce((acc, cur) => acc + cur, 0);
-console.log(bankDepositSum);
+console.log(bankDepositSum); // 25180
 
 // 2.
-const numDeposits1000 = accounts.flatMap((acc) => acc.movements).filter((mov) => mov > 1000).length;
-console.log(numDeposits1000);
+const numDeposits1000 = accounts
+  .flatMap((acc) => acc.movements)
+  .filter((mov) => mov >= 1000).length;
+console.log(numDeposits1000); //6
 
-// 6 46
+const numDeposits1000_2 = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce((acc, mov) => {
+    return mov >= 1000 ? ++acc : acc;
+  }, 0);
 
+console.log(numDeposits1000_2); // 6
+
+// ++ operator
+let num = 10;
+console.log(num++); // 10
+console.log(num); // 11
+
+// 3.
+
+// const sums = accounts
+//   .flatMap((acc) => acc.movements)
+//   .reduce(
+//     (acc, el) => {
+//       el > 0
+//         ? (acc.deposits += el)
+//         : (acc.whithdrawls += el);
+//       return acc;
+//     },
+//     { deposits: 0, whithdrawls: 0 }
+//   );
+
+// console.log(sums); // { deposits: 25180, whithdrawls: -7340 }
+
+// console.log(deposits, withdrawals);
+
+const { deposits_, withdrawals } = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce(
+    (sums, el) => {
+      sums[el > 0 ? 'deposits' : 'withdrawals'] += el;
+      return sums;
+    },
+    { deposits_: 0, withdrawals: 0 }
+  );
+
+console.log(deposits_, withdrawals);
+
+// 4.
+// this is a nice title = This Is a Nice Title
+
+function convertTitleCase(title) {
+  const expections = [
+    'a',
+    'an',
+    'the',
+    'but',
+    'or',
+    'in',
+    'with',
+  ];
+
+  const capitalize = (str) => str[0].toUpperCase() + str.slice(1)
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map((word) => expections.includes(word) ? word : word[0].toUpperCase() + word.slice(1)).join(' ');
+  return titleCase;
+}
+
+console.log(convertTitleCase('this is a nice title'));

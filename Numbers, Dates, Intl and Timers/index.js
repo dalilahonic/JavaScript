@@ -111,7 +111,7 @@ console.log(5 % 2); // 1
 // 5 = 2 * 2 + 1
 // 8 = 2 * 3 + 2
 
-const isEven = n => n % 2 === 0;
+const isEven = (n) => n % 2 === 0;
 console.log(isEven(8)); // true
 console.log(isEven(25)); // false
 
@@ -123,7 +123,7 @@ console.log(isEven(25)); // false
 //       if (i % 3 === 0) row.style.backgroundColor = 'blue';
 //     });
 //   });
-  
+
 //...........Numeric Seperators
 
 // 287,460,000,000
@@ -140,7 +140,6 @@ console.log(2 ** 53 - 1); // 9007199254740991
 console.log(Number.MAX_SAFE_INTEGER);
 
 // if we do calculations with numbers that are bigger than this we might lose precision
-
 
 console.log(24356432234345435435345345435454252353235n);
 // console.log(BigInt(24356432234345435435345345435454252353235n));
@@ -190,7 +189,7 @@ console.log(future.getHours());
 console.log(future.getMinutes());
 console.log(future.getSeconds());
 console.log(future.toISOString());
-console.log(future.getTime()); 
+console.log(future.getTime());
 
 console.log(new Date(2142256980000));
 
@@ -198,3 +197,100 @@ console.log(Date.now());
 
 future.setFullYear(2040);
 console.log(future);
+
+//..........................................
+
+// const future = new Date(2037, 10, 19, 15, 23);
+console.log(future);
+console.log(Number(future));
+// timestamp in miliseconds
+
+const dayPassed = (date1, date2) =>
+  Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
+// divide it by 1 000 to convert it to seconds, 60 to convert it to minutres, 60 to hours, 24 to convert it to days
+
+const days1 = dayPassed(
+  new Date(2037, 3, 20),
+  new Date(2037, 3, 14)
+);
+
+console.log(days1); // 10
+
+const day2 = dayPassed(
+  new Date(2037, 3, 20, 10, 8),
+  new Date(2037, 3, 14)
+);
+console.log(Math.round(day2)); // 6
+// 2037, 3, 20, 10, 8 : 10 hours and 8 minutes
+// Math.round to round the number
+
+//.................................................
+
+const num = 32432.32;
+
+const options = {
+  // style: 'unit',
+  // unit: 'mile-per-hour',
+
+  // style: 'percent'
+  // unit: 'celsius'
+
+  style: 'currency',
+  currency: 'EUR',
+  // useGrouping: false
+};
+
+console.log(
+  'US',
+  new Intl.NumberFormat('en-US', options).format(num)
+); // US €32,432.32
+console.log(
+  'Germany',
+  new Intl.NumberFormat('de-DE', options).format(num)
+); // Germany 32.432,32 €
+console.log(
+  'Serbia',
+  new Intl.NumberFormat('sr-Latn', options).format(num)
+); // Serbia 32.432,32 €
+
+//.....................................
+// setTimeout runs only once after a defined time
+// setInterval runs forever until we stop it
+
+function consoleLog(message) {
+  console.log(message);
+}
+
+setTimeout(() => consoleLog('console log this'), 3000); //console log this
+// we delayed calling this function for 3s
+// 3sec = 3000 miliseconds
+
+setTimeout(
+  (firstName, lastName) =>
+    console.log(`my name is ${firstName} ${lastName}`),
+  3000,
+  'Dalila',
+  'Honic'
+); // my name is Dalila Honic
+
+const ingredients = ['olives', 'spinach'];
+
+const pizzaTimer = setTimeout(
+  (ing1, ing2) =>
+    console.log(
+      `Here is your pizza with ${ing1} and ${ing2}`
+    ),
+  3000,
+  ...ingredients
+);
+
+if (ingredients.includes('spinach'))
+  clearTimeout(pizzaTimer);
+
+//setInterval
+
+// setInterval(() => {
+//   const now = new Date();
+//   console.log(now);
+// },1000);
+// every second a new date is created and printed to the console
