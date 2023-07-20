@@ -1305,12 +1305,16 @@ function moveZeros3(arr) {
   zeros = [];
   nums = [];
   arr.forEach((el) => {
-    if(el === 0) zeros.push(el)
-    else nums.push(el)
-  })
+    if (el === 0) zeros.push(el);
+    else nums.push(el);
+  });
 
-  return nums.concat(zeros)
+  return nums.concat(zeros);
 }
+
+//............................................
+
+
 
 //...........................................................................
 
@@ -1325,27 +1329,33 @@ function moveZeros3(arr) {
 // foo099 -> foo100
 
 // function incrementString(str) {
-//   lastCharacter = str.slice(-1);
-//   indexOfLastCharacter = str.lastIndexOf(lastCharacter);
+//   strArr = str.split('');
 
-//   let num = Number(lastCharacter);
+//   let numbers = strArr
+//     .filter((letter) => !isNaN(Number(letter) ))
+//     .join('');
+//   let letters = strArr
+//     .filter((letter) => isNaN(Number(letter)))
+//     .join('');
 
-//   if (isNaN(num) === false) {
-//     num++;
-//     str = str.slice(0, str.length - 1) + num;
+//   if (numbers.length > 0) {
+//     numbers = (parseInt(numbers) + 1)
+//       .toString()
+//       .padStart(numbers.length, '0');
 //   } else {
-//     str = str.slice(0, str.length - 1) + 1;
+//     numbers = 1;
 //   }
 
-//   return str;
+//   return letters.concat(numbers);
 // }
 
-// console.log(incrementString('fsds1'));
-// console.log(incrementString('fsds'));
+// console.log(incrementString('fsds324'));
+// console.log(incrementString('foobar000'));
+// console.log(incrementString('string'));
+// console.log(incrementString('fo99obar99'));
 
-// let thisd = 's';
-// thisd =Number(thisd),
-// console.log( isNaN(thisd));
+//......................................
+
 // ...............................
 // create all permutations of a non-empty input string and remove duplicates, if present.
 // Create as many "shufflings" as you can!
