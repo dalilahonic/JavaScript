@@ -1312,10 +1312,6 @@ function moveZeros3(arr) {
   return nums.concat(zeros);
 }
 
-//............................................
-
-
-
 //...........................................................................
 
 // Your job is to write a function which increments a string, to create a new string.
@@ -1354,9 +1350,27 @@ function moveZeros3(arr) {
 // console.log(incrementString('string'));
 // console.log(incrementString('fo99obar99'));
 
+//..............................
+
+//Complete the function that accepts a string parameter, and reverses each word in the string. All spaces in the string should be retained.
+//"This is an example!" ==> "sihT si na !elpmaxe"
+// "double  spaces"      ==> "elbuod  secaps"
+
+function reverseWords(str) {
+  str = str.split(' ');
+  let newArr = [];
+  str.forEach((element) => {
+    let string = '';
+    for (let i = element.length - 1; i >= 0; i--) {
+      string += element[i];
+    }
+    newArr.push(string);
+  });
+  return newArr.join(' ');
+}
+
 //......................................
 
-// ...............................
 // create all permutations of a non-empty input string and remove duplicates, if present.
 // Create as many "shufflings" as you can!
 // Examples:
