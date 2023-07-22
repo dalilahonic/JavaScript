@@ -1428,6 +1428,30 @@ console.log(
   ])
 );
 
+//...............................................................
+
+//.Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
+
+//* 'abc' =>  ['ab', 'c_']
+// * 'abcdef' => ['ab', 'cd', 'ef']
+
+function solution(str) {
+  let result = [];
+  str = str.split('');
+
+  for (let i = 0; i < str.length; i += 2) {
+    result.push(str[i] + (str[i + 1] ?? '_'));
+  }
+
+  return result;
+}
+
+console.log(solution('abcdef'));
+
+//.............................................................................
+// build a Xbonacci function that takes a signature of X elements - and remember each next element is the sum of the last X elements - and returns the first n elements of the so seeded sequence.
+
+
 //...........................................................
 // Write a program that performs a search for solutions to a word game. The goal of the game is to find sets of five words that share a vowel alternation. E.g., one solution to the game might be the words:
 // ['last', 'lest', 'list', 'lost', 'lust']
