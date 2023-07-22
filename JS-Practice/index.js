@@ -1324,33 +1324,41 @@ function moveZeros3(arr) {
 // foo9 -> foo10
 // foo099 -> foo100
 
-// function incrementString(str) {
-//   strArr = str.split('');
+function incrementString(str) {
+  str = str.split('');
 
-//   let numbers = strArr
-//     .filter((letter) => !isNaN(Number(letter) ))
-//     .join('');
-//   let letters = strArr
-//     .filter((letter) => isNaN(Number(letter)))
-//     .join('');
+  let numbers = [];
+  let indexOf;
 
-//   if (numbers.length > 0) {
-//     numbers = (parseInt(numbers) + 1)
-//       .toString()
-//       .padStart(numbers.length, '0');
-//   } else {
-//     numbers = 1;
-//   }
+  for (let i = str.length - 1; i >= 0; i--) {
+    if (!isNaN(Number(str[i]))) numbers.push(str[i]);
+    else if (isNaN(Number(str[i]))) {
+      indexOf = i;
+      break;
+    }
+  }
 
-//   return letters.concat(numbers);
-// }
+  let letters = str.slice(0, indexOf + 1);
+  numbers.reverse();
 
-// console.log(incrementString('fsds324'));
-// console.log(incrementString('foobar000'));
-// console.log(incrementString('string'));
-// console.log(incrementString('fo99obar99'));
+  if (numbers.length !== 0) {
+    nums = numbers.join('');
+    numbers = (Number(nums) + 1)
+      .toString()
+      .padStart(nums.length, '0');
+  } else {
+    numbers = '1';
+  }
 
-//..............................
+  return letters.join('').concat(numbers);
+}
+
+console.log(incrementString('fddd324'));
+console.log(incrementString('foobar000'));
+console.log(incrementString('string'));
+console.log(incrementString('fo99obar99'));
+
+//......................................................
 
 //Complete the function that accepts a string parameter, and reverses each word in the string. All spaces in the string should be retained.
 //"This is an example!" ==> "sihT si na !elpmaxe"
@@ -1369,40 +1377,7 @@ function reverseWords(str) {
   return newArr.join(' ');
 }
 
-//......................................
-
-// create all permutations of a non-empty input string and remove duplicates, if present.
-// Create as many "shufflings" as you can!
-// Examples:
-// With input 'a':
-// Your function should return: ['a']
-// With input 'ab':
-// Your function should return ['ab', 'ba']
-// With input 'abc':z
-// Your function should return ['abc','acb','bac','bca','cab','cba']
-
-// function permutations(str) {
-//   str = str.split('');
-//   let permutationsArr = [];
-
-//   for (let i = 0; i < str.length; i++) {
-//     let permutation = '';
-//     permutation += str[i];
-
-//     for (let x = 0; x < str.length; x++) {
-//       if (i !== x) {
-//         permutation += str[x];
-//       }
-//     }
-//     permutationsArr.push(permutation);
-//   }
-
-//   return permutationsArr;
-// }
-
-// console.log(permutations('abcd'));
-
-// ...........................................
+//.....................................................................
 
 //The directions given to the man are, for example, the following
 // ["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"].
@@ -1413,11 +1388,45 @@ function reverseWords(str) {
 //You can immediately see that going "NORTH" and immediately "SOUTH" is not reasonable, better stay to the same place! So the task is to give to the man a simplified version of the plan. A better plan in this case is simply:
 //Write a function dirReduc which will take an array of strings and returns an array of strings with the needless directions removed (W<->E or S<->N side by side).
 
-// function dirReduce(arr) {
-//   console.log(arr);
-// }
+function dirReduce(arr) {
+  const directions = {
+    NORTH: 'SOUTH',
+    EAST: 'WEST',
+  };
 
-// console.log(dirReduce([1, 2, 3]));
+  let directionsArr = [];
+
+  for (let [dir1, dir2] of Object.entries(directions))
+    directionsArr.push([dir1, dir2], [dir2, dir1]);
+
+  for (let i = 0; i < arr.length; i++) {
+    let newArr = [arr[i], arr[i + 1]];
+
+    for (let x = 0; x < directionsArr.length; x++) {
+      if (
+        newArr[0] === directionsArr[x][0] &&
+        newArr[1] === directionsArr[x][1]
+      ) {
+        arr.splice(i, 2);
+        i = -1;
+        break;
+      }
+    }
+  }
+
+  return arr;
+}
+
+console.log(
+  dirReduce([
+    'NORTH',
+    'EAST',
+    'WEST',
+    'SOUTH',
+    'WEST',
+    'WEST',
+  ])
+);
 
 //...........................................................
 // Write a program that performs a search for solutions to a word game. The goal of the game is to find sets of five words that share a vowel alternation. E.g., one solution to the game might be the words:
@@ -1425,6 +1434,21 @@ function reverseWords(str) {
 // This list above is a valid solution instance since the vowels 'a', 'e', 'i', 'o', and 'u' occur in the same positions between the consonant clusters 'l' and 'st'.
 // Your program should return a list of all solutions (like the list above) given a list of words to search through.
 // Note that order matters. If you prefer to use sets for book-keeping purposes, that is fine, but you will need to sort your list of solutions, and each solution set itself.
+
+// console.log(
+//   findSolutions([
+//     'apple',
+//     'banana',
+//     'orange',
+//     'last',
+//     'lest',
+//     'list',
+//     'lost',
+//     'lust',
+//     'cherry',
+//     'grape',
+//   ])
+// );
 
 //............................................
 
@@ -1434,7 +1458,29 @@ function reverseWords(str) {
 // Performance needs to be considered.
 
 // function scramble(str1, str2) {
-//   return [...str2].evsery((letter) => str1.includes(letter));
+//   strArr = str2.split('');
+
+//   for (let i = 0; i < str1.length; i++) {
+//     if (strArr.includes(str1[i])) {
+//       strArr.splice(strArr.indexOf(str1[i]), 1);
+//     }
+//   }
+
+//   return strArr.length === 0 ? true : false;
 // }
 
 // console.log(scramble('rkqodlw', 'world'));
+
+// let noviArr = ['rhjj', 'kkhkjj', 'jq'
+
+//.................................................................................
+
+// create all permutations of a non-empty input string and remove duplicates, if present.
+// Create as many "shufflings" as you can!
+// Examples:
+// With input 'a':
+// Your function should return: ['a']
+// With input 'ab':
+// Your function should return ['ab', 'ba']
+// With input 'abc':z
+// Your function should return ['abc','acb','bac','bca','cab','cba']
