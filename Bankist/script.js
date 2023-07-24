@@ -183,7 +183,7 @@ btnScrollTo.addEventListener('click', (e) => {
 
 //.......................................
 
-const h1 = document.querySelector('h1');
+// const h1 = document.querySelector('h1');
 
 // h1.addEventListener('mouseenter', () => {
 //   console.log('this is mouseenter event');
@@ -195,13 +195,13 @@ const h1 = document.querySelector('h1');
 
 // only listen to the event once
 
-const alertH1 = function (e) {
-  alert('This is alert');
+// const alertH1 = function (e) {
+//   alert('This is alert');
 
-  h1.removeEventListener('mouseenter', alertH1);
-};
+//   h1.removeEventListener('mouseenter', alertH1);
+// };
 
-h1.addEventListener('mouseenter', alertH1);
+// h1.addEventListener('mouseenter', alertH1);
 
 // setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000)
 
@@ -288,3 +288,143 @@ document
         .scrollIntoView({ behavior: 'smooth' });
     }
   });
+
+//..................................................
+
+// // Dom traversing
+
+// const h1 = document.querySelector('h1');
+
+// // Going downwards: child
+
+// console.log(h1.querySelectorAll('.highlight')); // returns a nodelist
+// // selects all elements with highlight class that are children of h1 element and that works no matter how deep these child elements would be inside the h1 element
+
+// // console.log(h1.childNodes);
+// console.log(h1.children); // returns html collection
+// // elements that are isnide h1. only direct children
+
+// h1.firstElementChild.style.color = 'white';
+// // first child of h1 element gets the color white
+
+// h1.lastElementChild.style.color = 'chocolate';
+// // last child of h1 element
+
+// // Going upwards: parents
+
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
+// // direct parent of h1 element
+
+// h1.closest('.header').style.backgroundColor = 'beige';
+// // selects the closest element with the class 'header'
+
+// // querySelector finds children no matter how deep in the DOM tree while the closest methods finds parents no matter how far up in the DOM tree
+
+// // Going sideways: siblings
+
+// // in js we can only access direct siblings
+
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+
+// console.log(h1.previousSibling);
+// console.log(h1.nextSibling);
+
+// console.log(h1.parentElement.children);
+// // all siblings
+
+// // console.log([...h1.parentElement.children])
+
+// [...h1.parentElement.children].forEach(function (el) {
+//   if(el !== h1) el.style.transform = 'scale(0.5)'
+// })
+
+//.......................
+
+// Tabbed component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector(
+  '.operations__tab-container'
+);
+const tabContent = document.querySelectorAll(
+  '.operations__content'
+);
+
+// tabs.forEach((tab) => tab.addEventListener('click' ,() => {
+//   console.log('tab');
+// }))
+// The problem with the provided code using forEach to add event listeners is that it creates a separate event listener for each tab element.  This approach can lead to potential performance issues and unnecessary event listeners.
+
+// common parent for all of tabs is tabsContainer
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+
+  // if we click on the tabsContainer we get null.ant that is because null is the result of the closest method when there is no matching parent element.
+
+  // Guard clause
+  if (!clicked) return;
+  //when we have null which is a falsy value then !false becomes true so the code after it will be executed
+  // console.log(clicked);
+
+  // remove active classes
+  tabs.forEach((tab) =>
+    tab.classList.remove('operations__tab--active')
+  );
+  tabContent.forEach((content) =>
+    content.classList.remove('operations__content--active')
+  );
+
+  // Active tab
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content area
+  document
+    .querySelector(
+      `.operations__content--${clicked.dataset.tab}`
+    )
+    .classList.add('operations__content--active');
+});
+
+//.................................
+
+// Menu fade animations
+
+const handleHover = function (e) {
+  // console.log(this);
+  const link = e.target;
+  // console.log(link);
+  const siblings = link
+    .closest('.nav')
+    .querySelectorAll('.nav__link');
+  const logo = link.closest('.nav').querySelector('img  ');
+
+  siblings.forEach((el) => {
+    if (el !== link) el.style.opacity = this;
+  });
+  logo.style.opacity = this;
+};
+
+const nav = document.querySelector('.nav');
+
+// mouseenter does not bubble
+// nav.addEventListener('mouseover', handleHover(0.5));
+// js expects here a function and not some other regular value which would be the reusult of calling the function like this handleHover(e, 0.5)
+
+// nav.addEventListener('mouseover', function (e) {
+//   handleHover(e, 0.5);
+// });
+
+// nav.addEventListener('mouseout', function (e) {
+//   handleHover(e, 1);
+// });
+
+// Passing "argument" into handler
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+// sticky navigation
+window.addEventListener('scroll', function (e) {
+  console.log(window.scrollY);
+});
