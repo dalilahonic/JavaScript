@@ -461,4 +461,4 @@ const observer = new IntersectionObserver(
 
 observer.observe(section1);
 
-// 7:45
+// 7:45.
