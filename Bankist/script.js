@@ -93,8 +93,8 @@ document
 
 // Styles
 
-message.style.backgroundColor = '#37384d';
-message.style.width = '120%';
+// message.style.backgroundColor = '#37384d';
+// message.style.width = '120%';
 // these styles are set as inline styles
 
 // console.log(getComputedStyle(message)); // CSSStyleDeclaration
@@ -104,15 +104,15 @@ console.log(getComputedStyle(message).color); //rgb(187, 187, 187)
 console.log(getComputedStyle(message).height); //49px
 // height we didn't define ourselves but the browser needed to calculate the height to display it
 
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height, 10) +
-  40 +
-  'px';
+// message.style.height =
+//   Number.parseFloat(getComputedStyle(message).height, 10) +
+//   40 +
+//   'px';
 
-document.documentElement.style.setProperty(
-  '--color-primary',
-  'orangered'
-);
+// document.documentElement.style.setProperty(
+//   '--color-primary',
+//   'orangered'
+// );
 
 // Atttributes
 
@@ -425,6 +425,40 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
 
 // sticky navigation
-window.addEventListener('scroll', function (e) {
-  console.log(window.scrollY);
-});
+
+// const initialCoords = section1.getBoundingClientRect().top
+
+// console.log(initialCoords);
+
+// window.addEventListener('scroll', function () {
+// console.log(window.scrollY);
+
+//   if(this.window.scrollY > initialCoords) nav.classList.add('sticky')
+//   else nav.classList.remove('sticky')
+// });
+// scroll event is not efficient and should be avoided
+// scrollY is on the window object and not on the event
+
+const obsCallback = function (entries, observer) {
+  entries.forEach((entry) => {
+    console.log(entry);
+  });
+};
+
+// this callback will be called each time the observed element (Section1) is intersecting the root element at the threshold that we defined
+// whenever section1 is intersecting the viewport at 10% the callback function will be called
+
+const obsOption = {
+  root: null,
+  threshold: 0.1,
+};
+
+const observer = new IntersectionObserver(
+  obsCallback,
+  obsOption
+);
+// callback and options
+
+observer.observe(section1);
+
+// 7:45
