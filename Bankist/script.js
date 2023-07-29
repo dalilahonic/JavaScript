@@ -450,7 +450,8 @@ const obsCallback = function (entries, observer) {
 
 const obsOption = {
   root: null,
-  threshold: 0.1,
+  // threshold: 0.1,
+  threshold: [0, 0.2]
 };
 
 const observer = new IntersectionObserver(
@@ -461,4 +462,4 @@ const observer = new IntersectionObserver(
 
 observer.observe(section1);
 
-// 7:45.
+// 10:20
