@@ -192,3 +192,79 @@ FullNameClass.hey(); // hey
 
 FullNameClass.hey2(); // hey
 // jonas.hey2(); // not a function
+
+//..........................
+
+const PersonProto = {
+  calcAge() {
+    return 2023 - this.birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+console.log(steven);
+steven.name = 'steven';
+steven.birthYear = 2003;
+console.log(steven.calcAge()); // 20
+
+//..............................................
+
+/* 
+2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6);
+3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing the value, by multiplying the input by 1.6);
+4. Create a new car and experiment with the accelerate and brake methods, and with the getter and setter.
+
+DATA CAR 1: 'Ford' going at 120 km/h
+
+*/
+
+class CarClass {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  get speedUS() {
+    return parseFloat(this.speed) / 1.6 + 'mi/h';
+  }
+
+  // always one argument
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
+  }
+}
+
+const car1 = new CarClass('Ford', '112km/h');
+console.log(car1);
+console.log(car1.speedUS); // 70mi/h
+
+//.......................................
+
+const NewPersonClass = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+NewPersonClass.prototype.calcAge = function () {
+  return 2023 - this.birthYear;
+};
+
+const Student = function (firstName, birthYear, course) {
+  // this.firstName = firstName;
+  // this.birthYear = birthYear;
+
+  NewPersonClass.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+Student.prototype = Object.create(Perosn.prototype);
+
+Student.prototype.introduce = function () {
+  return `My name is ${this.firstName} and I study ${this.course}`;
+};
+
+const mike = new Student('Mike', 2003, 'cs');
+console.log(mike);
+console.log(mike.introduce());
+
+// 12:30
