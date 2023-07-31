@@ -66,7 +66,7 @@ const header = document.querySelector('.header');
 // header.prepend(message);
 // prepend adds the message element as the first child of header element
 
-header.append(message);
+// header.append(message);
 // append adds the message element as the last child of the header element
 
 // we can also use prepend and appennd not only to insert elements but to move them
@@ -81,12 +81,12 @@ header.append(message);
 
 // Delete elements
 
-document
-  .querySelector('.btn--close-cookie')
-  .addEventListener('click', () => {
-    message.remove();
-    // message.parentElement.removeChild(message)
-  });
+// document
+//   .querySelector('.btn--close-cookie')
+//   .addEventListener('click', () => {
+//     message.remove();
+// message.parentElement.removeChild(message)
+// });
 // when we click on the button the div with class 'nessage' gets deleted
 
 //.................................
@@ -398,7 +398,7 @@ const handleHover = function (e) {
   const siblings = link
     .closest('.nav')
     .querySelectorAll('.nav__link');
-  const logo = link.closest('.nav').querySelector('img  ');
+  const logo = link.closest('.nav').querySelector('img');
 
   siblings.forEach((el) => {
     if (el !== link) el.style.opacity = this;
@@ -439,27 +439,167 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 // scroll event is not efficient and should be avoided
 // scrollY is on the window object and not on the event
 
-const obsCallback = function (entries, observer) {
-  entries.forEach((entry) => {
-    console.log(entry);
-  });
-};
+// const obsCallback = function (entries, observer) {
+//   entries.forEach((entry) => {
+//     console.log(entry);
+//   });
+// };
 
 // this callback will be called each time the observed element (Section1) is intersecting the root element at the threshold that we defined
 // whenever section1 is intersecting the viewport at 10% the callback function will be called
 
-const obsOption = {
-  root: null,
-  // threshold: 0.1,
-  threshold: [0, 0.2]
-};
+// const obsOption = {
+//   root: null,
+//   // threshold: 0.1,
+//   threshold: [0, 0.2]
+// 0 will trigger each tim our target element moves completly out of the view and as soon as it entries the view
+// that is beacuse a callback function will be called when the threshold is passed when moving into the view and moving out of the view
+// };
 
-const observer = new IntersectionObserver(
-  obsCallback,
-  obsOption
-);
+// const observer = new IntersectionObserver(
+//   obsCallback,
+//   obsOption
+// );
 // callback and options
 
-observer.observe(section1);
+// observer.observe(section1);
 
-// 10:20
+// const header = document.querySelector('.header');
+
+const stickyNav = function (enteries) {
+  const entry = enteries[0];
+  // console.log(entry);
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const navHeight = nav.getBoundingClientRect().height;
+// console.log(navHeight);
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  // when 0% of the header is visible
+
+  rootMargin: `-${navHeight}px`,
+  // a box of 90px that will be applied outside of our target element(header)
+});
+
+headerObserver.observe(header);
+
+//....................reveling elements on scroll
+
+// Reveal section
+
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, observer) {
+  const entry = entries[0];
+  // console.log(entry);
+
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(
+  revealSection,
+  {
+    root: null,
+    threshold: 0.15,
+    //when section is 15% percent visible
+  }
+);
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
+
+// Loading images
+
+const imgTargets =
+  document.querySelectorAll('img[data-src]');
+
+const loadImg = function (entries, observer) {
+  const entry = entries[0];
+  // console.log(entry);
+
+  if (!entry.isIntersecting) return;
+
+  // Replace src with data-src
+  // console.log(entry.target);
+
+  entry.target.src = entry.target.dataset.src;
+  console.log(entry.target);
+
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observe.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '100px',
+});
+
+imgTargets.forEach((img) => imgObserver.observe(img));
+
+//........................
+
+// slider
+
+const slides = document.querySelectorAll('.slide');
+
+let btnLeft = document.querySelector('.slider__btn--left');
+let btnRight = document.querySelector(
+  '.slider__btn--right'
+);
+
+let curSlide = 0;
+const maxSlides = slides.length;
+
+const slider = document.querySelector('.slider');
+slider.style.overflow = 'visible';
+
+// slides.forEach(
+//   (slide, i) =>
+//     (slide.style.transform = `translateX(${100 * i}%)`)
+// );
+
+function goToSlide(slide) {
+  slides.forEach((s, i) => {
+    s.style.transform = `translateX(${100 * (i - slide)}%)`;
+  });
+}
+
+goToSlide(0);
+
+function nextSlide() {
+  if (curSlide === maxSlides - 1) curSlide = 0;
+  else curSlide++;
+
+  // slides.forEach((slide, i) => {
+  //   slide.style.transform = `translateX(${
+  //     100 * (i - curSlide)
+  //   }%)`;
+  // });
+
+  goToSlide(curSlide);
+}
+
+function prevSlide() {
+  if (curSlide === 0) curSlide = maxSlides -1;
+  else curSlide--;
+  goToSlide(curSlide)
+}
+
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide)
+
+// 22 :06.
