@@ -533,13 +533,13 @@ const loadImg = function (entries, observer) {
   // console.log(entry.target);
 
   entry.target.src = entry.target.dataset.src;
-  console.log(entry.target);
+  // console.log(entry.target);
 
   entry.target.addEventListener('load', function () {
     entry.target.classList.remove('lazy-img');
   });
 
-  observe.unobserve(entry.target);
+  observer.unobserve(entry.target);
 };
 
 const imgObserver = new IntersectionObserver(loadImg, {
@@ -565,7 +565,18 @@ let curSlide = 0;
 const maxSlides = slides.length;
 
 const slider = document.querySelector('.slider');
-slider.style.overflow = 'visible';
+
+const activateDot = function (slide) {
+  document.querySelectorAll('.dots__dot').forEach((dot) => {
+    dot.classList.remove('dots__dot--active');
+  });
+
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+};
+
+// activateDot(0);
 
 // slides.forEach(
 //   (slide, i) =>
@@ -591,15 +602,44 @@ function nextSlide() {
   // });
 
   goToSlide(curSlide);
+  activateDot(curSlide);
 }
 
 function prevSlide() {
-  if (curSlide === 0) curSlide = maxSlides -1;
+  if (curSlide === 0) curSlide = maxSlides - 1;
   else curSlide--;
-  goToSlide(curSlide)
+  goToSlide(curSlide);
+  activateDot(curSlide);
 }
 
 btnRight.addEventListener('click', nextSlide);
-btnLeft.addEventListener('click', prevSlide)
+btnLeft.addEventListener('click', prevSlide);
 
-// 22 :06.
+//.......................
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') prevSlide();
+  e.key === 'ArrowRight' && nextSlide();
+});
+
+const dotContainer = document.querySelector('.dots');
+const createDots = function () {
+  slides.forEach(function (_, i) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+
+createDots();
+
+dotContainer.addEventListener('click', (e) => {
+  if (e.target.classList.contains('dots__dot')) {
+    const { slide } = e.target.dataset;
+    goToSlide(slide);
+    activateDot(slide);
+  }
+});
+
+// 16:10
