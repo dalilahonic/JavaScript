@@ -272,3 +272,85 @@ console.log(mike instanceof Student); // true
 console.log(mike instanceof NewPersonClass); // true
 
 //.............................................
+
+/* 
+1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and current speed, the EV also has the current battery charge in % ('charge' property);
+2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
+3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
+4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism 
+
+DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
+
+*/
+
+const EV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+};
+
+EV.prototype = Object.create(Car.prototype);
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
+
+EV.prototype.accelarate = function () {
+  this.speed += 20;
+  this.charge--;
+};
+const tesla = new EV('Tesla', 100, 43);
+console.log(tesla);
+
+//......................
+
+class StudentClass extends Person {
+  constructor(firstName, birthYear, course) {
+    super(firstName, birthYear);
+    this.course = course;
+  }
+
+  introduce() {
+    console.log(
+      `my name is ${this.firstName} and I was born in ${this.birthYear}`
+    );
+  }
+
+  // overwritting calcAge method.
+  calcAge() {
+    return `${2023 - this.birthYear} years old`;
+  }
+}
+
+const martha = new StudentClass('Marhta', 1932, 'cs');
+console.log(martha); // StudentClass { firstName: 'Marhta', birthYear: 1932, course: 'cs' }
+martha.introduce(); // my name is Marhta and I was born in 1932
+console.log(martha.calcAge()); // 91 years old
+
+//..............................
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    // this.locale = navigator.language;
+  }
+
+  deposit(value) {
+    this.movements.push(value);
+  }
+
+  withdraw(value) {
+    this.deposit(-value);
+  }
+}
+
+const acc1 = new Account('Dalila', 'EUR', 342);
+console.log(acc1); // Account { owner: 'Dalila', currency: 'EUR', pin: 342, movements: [] }
+
+acc1.deposit(2);
+acc1.withdraw(100);
+
+// console.log(acc1);
+
+// 8:00
