@@ -257,7 +257,7 @@ const Student = function (firstName, birthYear, course) {
   this.course = course;
 };
 
-Student.prototype = Object.create(Perosn.prototype);
+Student.prototype = Object.create(NewPersonClass.prototype);
 
 Student.prototype.introduce = function () {
   return `My name is ${this.firstName} and I study ${this.course}`;
@@ -265,6 +265,10 @@ Student.prototype.introduce = function () {
 
 const mike = new Student('Mike', 2003, 'cs');
 console.log(mike);
-console.log(mike.introduce());
+console.log(mike.introduce()); // My name is Mike and I study cs
+console.log(mike.calcAge()); // 20
 
-// 12:30
+console.log(mike instanceof Student); // true
+console.log(mike instanceof NewPersonClass); // true
+
+//.............................................

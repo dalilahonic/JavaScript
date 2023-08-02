@@ -591,6 +591,16 @@ function goToSlide(slide) {
 
 goToSlide(0);
 
+const dotContainer = document.querySelector('.dots');
+
+const createDots = function () {
+  slides.forEach(function (_, i) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
 function nextSlide() {
   if (curSlide === maxSlides - 1) curSlide = 0;
   else curSlide++;
@@ -612,6 +622,14 @@ function prevSlide() {
   activateDot(curSlide);
 }
 
+function init() {
+  goToSlide(0);
+  createDots();
+  activateDot(0);
+}
+
+init();
+
 btnRight.addEventListener('click', nextSlide);
 btnLeft.addEventListener('click', prevSlide);
 
@@ -622,18 +640,6 @@ document.addEventListener('keydown', (e) => {
   e.key === 'ArrowRight' && nextSlide();
 });
 
-const dotContainer = document.querySelector('.dots');
-const createDots = function () {
-  slides.forEach(function (_, i) {
-    dotContainer.insertAdjacentHTML(
-      'beforeend',
-      `<button class="dots__dot" data-slide="${i}"></button>`
-    );
-  });
-};
-
-createDots();
-
 dotContainer.addEventListener('click', (e) => {
   if (e.target.classList.contains('dots__dot')) {
     const { slide } = e.target.dataset;
@@ -642,4 +648,23 @@ dotContainer.addEventListener('click', (e) => {
   }
 });
 
-// 16:10
+//.................................
+
+// this event is fired as soon as the HTML is downloaded and converted to the DOM tree.
+// DOMContentLoaded event waits for all scripts to execute, except for async scripts. this event fires after defer script is executed
+
+// document.addEventListener(
+//   'DOMContentLoaded',
+//   function (e) {}
+// );
+
+// fired as soon as not only HTML is loaded but all the images and external resources like CSS.
+
+// window.addEventListener('load', () => {});
+
+// fired before a user is about to leave a page
+// window.addEventListener('beforeunload', (e) => {
+//   e.preventDefault();
+//   e.returnValue = '';
+//  // pop us that asks us if we want to leave the site
+// });
