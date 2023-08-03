@@ -328,29 +328,91 @@ console.log(martha.calcAge()); // 91 years old
 //..............................
 
 class Account {
+  // public fields (instances)
+  // locale = navigator.language;
+  // _movements = [];
+
+  // Private fields (instances not prototype)
+  // not accessible from the ouside
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
+    // protected property
+    // this._pin = pin;
+    // this._movements = [];
+
+    // private field
+    this.#pin = pin;
     // this.locale = navigator.language;
   }
 
   deposit(value) {
-    this.movements.push(value);
+    // this._movements.push(value);
+    this.#movements.push(value);
+    return this;
   }
 
   withdraw(value) {
     this.deposit(-value);
+    return this;
+  }
+
+  // _approveLoan(value) {
+  //   return true;
+  // }
+
+  // requestLoan(val) {
+  //   if (this._approveLoan) {
+  //     this.deposit(val);
+  //   }
+  // }
+
+  getMovements() {
+    // return this._movements;
+    return this.#movements;
+  }
+
+  // private methods
+
+  #approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this.#approveLoan) {
+      this.deposit(val);
+      return this;
+    }
   }
 }
 
 const acc1 = new Account('Dalila', 'EUR', 342);
-console.log(acc1); // Account { owner: 'Dalila', currency: 'EUR', pin: 342, movements: [] }
+console.log(acc1); // Account { owner: 'Dalila', currency: 'EUR' }
 
 acc1.deposit(2);
 acc1.withdraw(100);
+acc1.requestLoan(100);
 
 // console.log(acc1);
 
-// 8:00
+// encapsulation : keeping some properties and methods private inside the class so that they are not accessible from outside the class.
+
+// acc1._movements.push(200);
+// still accessible if we use this _
+
+// console.log(acc1.getMovements());
+
+// console.log(acc1.#movements); // SyntaxError
+console.log(acc1.getMovements()); // [ 2, -100, 100 ]
+
+// console.log(acc1.#approveLoan(100)); // SynthaxError
+
+// Chaining
+
+acc1.deposit(300).deposit(232).withdraw(100);
+
+console.log(acc1.getMovements()); // [ 2, -100, 100, 300, 232, -100 ]
+
