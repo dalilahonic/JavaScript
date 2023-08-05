@@ -219,10 +219,17 @@ const renderError = function (msg) {
 
 const getCountryAndNeighbour = function (country) {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(
-      (response) => response.json()
+    .then((response) => {
       // ,(err) => alert(err)
-    )
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error(`Country not found 🍟🍟🍟`);
+      }
+      // the effect of creating and throwing an error is that the promise will immediatly reject.
+      // this will automaticlly return a rejected promise
+      return response.json();
+    })
     .then((data) => {
       renderCountry(data[0]);
       const neighbour = data[0].borders?.[0];
@@ -246,14 +253,24 @@ const getCountryAndNeighbour = function (country) {
       // err is an object. and every err object that was created like this contains message property.
 
       // we can handle all the errors no matter where they appear in the chain at the end of the chain by using catch method
-    })//.finally(() => {
-
-    // });
-    // the callback function that we define in the finally method will always be called no matter what happens with the promise 
+    })
+    .finally(() => {
+      console.log('🍟🍟🍟');
+    });
+  // the callback function that we define in the finally method will always be called no matter what happens with the promise
 };
 
 btn.addEventListener('click', () => {
   getCountryAndNeighbour('greece');
+  getCountryAndNeighbour('das');
 });
 
-// 12:38
+fetch('https://dummyjson.com/quotes')
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.quotes.length > 20)
+      throw new Error('too many quotes');
+
+    console.log(data.quotes); // this will not execute
+  })
+  .catch((err) => console.log(err));
