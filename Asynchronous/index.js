@@ -68,6 +68,8 @@ const countriesContainer =
 // console.log(Object.values(objeakat));
 
 const renderCountry = function (data, className = '') {
+  const currency = Object.keys(data.currencies)[0];
+
   const html = `
   <article class="country ${className}">
   <img class="country__img" src="${data.flags.png}" />
@@ -84,8 +86,8 @@ const renderCountry = function (data, className = '') {
                 <p class="country__row"><span> ${
                   Object.values(data.languages)[0]
                 }</span> LANG</p>
-            <p class="country__row"><span>${
-              data.currencies.EUR.name
+            <p class="country__row"><span>$${
+              data.currencies[currency].name
             }</span> CUR</p>
             </div>
             </article>
@@ -217,47 +219,91 @@ const renderError = function (msg) {
   countriesContainer.style.opacity = 1;
 };
 
-const getCountryAndNeighbour = function (country) {
-  fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then((response) => {
-      // ,(err) => alert(err)
-      console.log(response);
+// const getCountryAndNeighbour = function (country) {
+//   fetch(`https://restcountries.com/v3.1/name/${country}`)
+//     .then((response) => {
+//       // ,(err) => alert(err)
+//       console.log(response);
 
-      if (!response.ok) {
-        throw new Error(`Country not found 🍟🍟🍟`);
-      }
-      // the effect of creating and throwing an error is that the promise will immediatly reject.
-      // this will automaticlly return a rejected promise
-      return response.json();
-    })
+//       if (!response.ok) {
+//         throw new Error(`Country not found 🍟🍟🍟`);
+//       }
+//       // the effect of creating and throwing an error is that the promise will immediatly reject.
+//       // this will automaticlly return a rejected promise
+//       return response.json();
+//     })
+//     .then((data) => {
+//       renderCountry(data[0]);
+//       const neighbour = data[0].borders?.[0];
+
+//       if (!neighbour) return;
+
+//       return fetch(
+//         `https://restcountries.com/v3.1/alpha/${neighbour}`
+//       );
+//     })
+//     .then(
+//       (response) => response.json()
+//       // ,(err) => alert(err)
+//     )
+//     .then((data) => renderCountry(data[0], 'neighbour'))
+//     .catch((err) => {
+//       console.log(`this is an error ${err} 🍟`);
+//       renderError(
+//         `Something went wrong ${err.message} 🍟🍟🍟`
+//       );
+//       // err is an object. and every err object that was created like this contains message property.
+
+//       // we can handle all the errors no matter where they appear in the chain at the end of the chain by using catch method
+//     })
+//     .finally(() => {
+//       console.log('🍟🍟🍟');
+//     });
+//   // the callback function that we define in the finally method will always be called no matter what happens with the promise
+// };
+
+// btn.addEventListener('click', () => {
+//   getCountryAndNeighbour('greece');
+//   getCountryAndNeighbour('das');
+// });
+
+const getJSON = function (
+  url,
+  errorMsg = 'something went wrong'
+) {
+  return fetch(url).then((response) => {
+    if (!response.ok) {
+      throw new Error(`${errorMsg} `);
+    }
+    return response.json();
+  });
+};
+
+const getCountryAndNeighbour = function (country) {
+  getJSON(
+    `https://restcountries.com/v3.1/name/${country}`,
+    `Country not found 🍟🍟🍟`
+  )
     .then((data) => {
       renderCountry(data[0]);
       const neighbour = data[0].borders?.[0];
 
-      if (!neighbour) return;
+      if (!neighbour) throw new Error('No neighbour found');
 
-      return fetch(
-        `https://restcountries.com/v3.1/alpha/${neighbour}`
-      );
+      return getJSON(
+        `https://restcountries.com/v3.1/alpha/${neighbour}`,
+        'country not found'
+      ).then((data) => renderCountry(data[0], 'neighbour'));
     })
-    .then(
-      (response) => response.json()
-      // ,(err) => alert(err)
-    )
-    .then((data) => renderCountry(data[0], 'neighbour'))
     .catch((err) => {
       console.log(`this is an error ${err} 🍟`);
       renderError(
         `Something went wrong ${err.message} 🍟🍟🍟`
       );
-      // err is an object. and every err object that was created like this contains message property.
-
-      // we can handle all the errors no matter where they appear in the chain at the end of the chain by using catch method
     })
     .finally(() => {
       console.log('🍟🍟🍟');
     });
-  // the callback function that we define in the finally method will always be called no matter what happens with the promise
 };
 
 btn.addEventListener('click', () => {
@@ -271,6 +317,78 @@ fetch('https://dummyjson.com/quotes')
     if (data.quotes.length > 20)
       throw new Error('too many quotes');
 
-    console.log(data.quotes); // this will not execute
+    console.log(data.quotes); // this will not be executed
   })
   .catch((err) => console.log(err));
+
+//..........................................
+
+/* 
+In this challenge you will build a function 'whereAmI' which renders a country ONLY based on GPS coordinates. For that, you will use a second API to geocode coordinates.
+
+Here are your tasks:
+
+PART 1
+1. Create a function 'whereAmI' which takes as inputs a latitude value (lat) and a longitude value (lng) (these are GPS coordinates, examples are below).
+2. Do 'reverse geocoding' of the provided coordinates. Reverse geocoding means to convert coordinates to a meaningful location, like a city and country name. Use this API to do reverse geocoding: https://geocode.xyz/api.
+The AJAX call will be done to a URL with this format: https://geocode.xyz/52.508,13.381?geoit=json. Use the fetch API and promises to get the data. Do NOT use the getJSON function we created, that is cheating 😉
+3. Once you have the data, take a look at it in the console to see all the attributes that you recieved about the provided location. Then, using this data, log a messsage like this to the console: 'You are in Berlin, Germany'
+4. Chain a .catch method to the end of the promise chain and log errors to the console
+5. This API allows you to make only 3 requests per second. If you reload fast, you will get this error with code 403. This is an error with the request. Remember, fetch() does NOT reject the promise in this case. So create an error to reject the promise yourself, with a meaningful error message.
+
+PART 2
+6. Now it's time to use the received data to render a country. So take the relevant attribute from the geocoding API result, and plug it into the countries API that we have been using.
+7. Render the country and catch any errors, just like we have done in the last lecture (you can even copy this code, no need to type the same code)
+
+TEST COORDINATES 1: 52.508, 13.381 (Latitude, Longitude)
+TEST COORDINATES 2: 19.037, 72.873
+TEST COORDINATES 2: -33.933, 18.474
+
+*/
+
+function whereAmI(latitude, longitude) {
+  fetch(
+    `https://geocode.xyz/${latitude},${longitude}?geoit=json`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      // console.log(data);
+
+      if (!data.country) {
+        throw new Error(
+          `something went wrong, please reload the page`
+        );
+      } else {
+        console.log(
+          `you are in ${data.city}, ${data.country}`
+        );
+      }
+
+      fetch(
+        `https://restcountries.com/v3.1/name/${data.country}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          renderCountry(data[0]);
+        });
+    })
+    .catch((err) => console.log(err));
+}
+
+// whereAmI(52.508, 13.381);
+// whereAmI(19.037, 72.873);
+whereAmI(-33.933, 18.474); 
+
+// const objekat2 = {
+//   currencies: {
+//     usd: {
+//       name: 'United States dollar',
+//     },
+//   },
+// };
+
+// const currency = Object.keys(objekat2.currencies)[0];
+// console.log(currency);
+
+// console.log(objekat2.currencies.currency.name);
