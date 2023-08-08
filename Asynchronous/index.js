@@ -364,12 +364,12 @@ function whereAmI(latitude, longitude) {
         );
       }
 
-      fetch(
+      return fetch(
         `https://restcountries.com/v3.1/name/${data.country}`
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           renderCountry(data[0]);
         });
     })
@@ -378,7 +378,8 @@ function whereAmI(latitude, longitude) {
 
 // whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.873);
-whereAmI(-33.933, 18.474); 
+// whereAmI(-33.933, 18.474);
+// whereAmI(43.463, 11.961);
 
 // const objekat2 = {
 //   currencies: {
@@ -392,3 +393,27 @@ whereAmI(-33.933, 18.474);
 // console.log(currency);
 
 // console.log(objekat2.currencies.currency.name);
+
+//....................................
+
+console.log('test');
+setTimeout(() => console.log('0 sec'), 0);
+Promise.resolve('resolved promise 1').then((res) =>
+  console.log(res)
+);
+
+// Promise.resolve('Resolved promise 2').then((res) => {
+// for (let i = 0; i < 1000000000; i++) {}
+// console.log(res);
+// if there is a task like this loop that will take a lot of time to execute the timer above will take longer than 0 sec to execute.
+// });
+
+console.log('test 2');
+
+// first two messages that are going to be printed are 'test' and 'test 2' .code that is outside of any callback will run first.
+
+// both the setTimeout function and promise will finish at the same time.
+// timer is put on the callback queue. promise will be put on the microtask queue which has priority over the callback queue. so promise will be executed first.
+
+//.................................................................
+
