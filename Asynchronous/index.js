@@ -417,3 +417,28 @@ console.log('test 2');
 
 //.................................................................
 
+const lotteryPromise = new Promise(function (
+  resolve,
+  reject
+) {
+  console.log('lotter draw is happening');
+
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve('You Win');
+    } else {
+      // reject('you lost your money');
+      reject(new Error('you lost your money'));
+    }
+  }, 2000);
+
+  // into reject function we pass in an error message
+});
+
+lotteryPromise
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err));
+
+// resolved value of the promise is going to be the one that we passed in resolve function and the error will the message that we passed in reject function
+
+// 11:00
