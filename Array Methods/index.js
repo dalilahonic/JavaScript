@@ -209,7 +209,7 @@ console.log(arr1); //[ 2, 3, 4, 5 ]
 
 //.................................FROM
 
-//The Array.from() method creates a new array from a string
+//The Array.from() method creates a new array from an iterable or array-like object
 
 let str = 'dalila';
 
@@ -367,10 +367,82 @@ console.log(arr1); //[ 10, 20, 1, 2, 3 ]
 
 // ...............................VALUES
 
-arr1 = [1,2,3,4]
+arr1 = [1, 2, 3, 4];
 
-for(let a of arr1.values()) console.log(a);
+for (let a of arr1.values()) console.log(a);
 //1
 //2
 //3
 //4
+
+//........................
+
+arr1 = [1, 2, 3, 4];
+console.log(Object.keys(arr1)); // [ '0', '1', '2', '3' ]
+console.log(Object.values(arr1)); // [ 1, 2, 3, 4 ]
+console.log(Object.entries(arr1)); // [ [ '0', 1 ], [ '1', 2 ], [ '2', 3 ], [ '3', 4 ] ];
+
+// arr1.length = 10;
+// console.log(arr1); // [ 1, 2, 3, 4, <6 empty items> ]
+
+arr1.length = 2;
+console.log(arr1); // [ 1, 2 ]
+// decreasing the length of an array deltes elements
+
+//........................
+
+arr1 = [1, 2, 3, 4, 5];
+arr1.copyWithin(0, 1, 3);
+console.log(arr1); // [ 2, 3, 3, 4, 5 ]
+// mutates the original array
+
+// create a copy of the original array using spread operator or slice() method to chage a mutating method into non-mutating
+
+arr1 = [1, 2, 3, 4, 5];
+// arr2 = arr1.slice().copyWithin(0, 1, 3);
+arr2 = [...arr1].copyWithin(0, 1, 3);
+console.log(arr1); // [ 1, 2, 3, 4, 5 ]
+
+//..........................................
+
+let arrayLike = {
+  0: '1',
+  1: '2',
+  length: 2,
+};
+
+console.log(Array.prototype.join.call(arrayLike, ',')); // 1,2
+
+// some array methods can be used on objects that are "array-like," meaning they have numeric properties like indexes and a length property
+// many DOM objects are also array-like objects like NodeList or HTMLCollection
+// Since array methods are designed to work on arrays, you need to use the .call() or .apply() method to explicitly set the this value within the array method to the object you want to operate on.
+
+console.log(Array.prototype.slice.call(arrayLike)); // [ '1', '2' ]
+console.log(Array.prototype.slice.call(arrayLike, 1)); // [ '2' ]
+
+//................................
+
+function f() {
+  console.log(Array.prototype.join.call(arguments, '+'));
+  console.log(arguments); // [Arguments] { '0': 'a', '1': 'b' }
+  console.log(arguments[0]); // a
+}
+
+f('a', 'b'); // 'a+b'
+
+function sumNum() {
+  return Object.values(arguments).reduce(
+    (acc, curr) => acc + curr
+  );
+}
+
+console.log(sumNum(8, 3)); // 11
+console.log(sumNum(8, 2, 2, 4)); // 16
+
+// argument is also array-like object accessible inside functions and contains values of arguments that are passed in
+// arguments object is not avaivable in arrow functions
+
+//.....................................
+
+console.log(new Array(1, 2, 3)); // [ 1, 2, 3 ]
+console.log(Array(1, 2, 3)); // [ 1, 2, 3 ]
