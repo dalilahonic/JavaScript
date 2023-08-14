@@ -441,4 +441,24 @@ lotteryPromise
 
 // resolved value of the promise is going to be the one that we passed in resolve function and the error will the message that we passed in reject function
 
-// 11:00
+function wait(secondes) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, secondes * 1000);
+  });
+}
+
+wait(2)
+  .then(() => {
+    console.log('2 secs');
+
+    return wait(1);
+  })
+  .then(() => console.log('1  sec'));
+
+Promise.resolve('abc').then((x) => console.log(x));
+Promise.reject(new Error('Problem!')).catch((x) =>
+  console.log(x)
+);
+
+//..................................................
+
