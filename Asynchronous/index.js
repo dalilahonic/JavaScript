@@ -296,13 +296,13 @@ const getCountryAndNeighbour = function (country) {
       ).then((data) => renderCountry(data[0], 'neighbour'));
     })
     .catch((err) => {
-      console.log(`this is an error ${err} 🍟`);
+      // console.log(`this is an error ${err} 🍟`);
       renderError(
         `Something went wrong ${err.message} 🍟🍟🍟`
       );
     })
     .finally(() => {
-      console.log('🍟🍟🍟');
+      // console.log('🍟🍟🍟');
     });
 };
 
@@ -317,9 +317,9 @@ fetch('https://dummyjson.com/quotes')
     if (data.quotes.length > 20)
       throw new Error('too many quotes');
 
-    console.log(data.quotes); // this will not be executed
-  })
-  .catch((err) => console.log(err));
+    // console.log(data.quotes); // this will not be executed
+  });
+// .catch((err) => console.log(err));
 
 //..........................................
 
@@ -359,9 +359,9 @@ function whereAmI(latitude, longitude) {
           `something went wrong, please reload the page`
         );
       } else {
-        console.log(
-          `you are in ${data.city}, ${data.country}`
-        );
+        // console.log(
+        //   `you are in ${data.city}, ${data.country}`
+        // );
       }
 
       return fetch(
@@ -372,8 +372,8 @@ function whereAmI(latitude, longitude) {
           // console.log(data);
           renderCountry(data[0]);
         });
-    })
-    .catch((err) => console.log(err));
+    });
+  // .catch((err) => console.log(err));
 }
 
 // whereAmI(52.508, 13.381);
@@ -462,3 +462,112 @@ Promise.reject(new Error('Problem!')).catch((x) =>
 
 //..................................................
 
+async function whereAmI2(country) {
+  // fetch(
+  //   `https://restcountries.com/v3.1/name/${country}`
+  // ).then((res) => cosole.log(res)).then((data)=> console.log(data));
+  try {
+    const response = await fetch(
+      `https://restcountries.com/v3.1/name/${country}`
+    );
+
+    const data = await response.json();
+
+    if (!response || !data)
+      throw new Error('cannot find data for this country');
+
+    renderCountry(data[0]);
+  } catch (err) {
+    // console.log(err);
+    // console.log('something went wrong');
+    renderError('something went wrong');
+  }
+}
+whereAmI2('Portugal');
+whereAmI2('Dominicana');
+
+//........................
+
+async function get3Countries(c1, c2, c3) {
+  try {
+    // const [data1] = await getJSON(
+    //   `https://restcountries.com/v3.1/name/${c1}`
+    // );
+    // const [data2] = await getJSON(
+    //   `https://restcountries.com/v3.1/name/${c2}`
+    // );
+    // const [data3] = await getJSON(
+    //   `https://restcountries.com/v3.1/name/${c3}`
+    // );
+
+    // console.log([
+    //   data1.capital,
+    //   data2.capital,
+    //   data3.capital,
+    // ]);
+
+    const data = await Promise.all([
+      getJSON(`https://restcountries.com/v3.1/name/${c1}`),
+      getJSON(`https://restcountries.com/v3.1/name/${c2}`),
+      getJSON(`https://restcountries.com/v3.1/name/${c3}`),
+    ]);
+    // this function takes in an array of promises and it returns a new promise which will then run all the promises in the array in the same time
+    const capitals = data.map((c) => c[0].capital);
+    // console.log(capitals);
+  } catch (err) {
+    // console.log(err);
+  }
+}
+
+get3Countries('Belgium', 'Colombia', 'Czechia');
+
+//............................
+
+(async function () {
+  const res = await Promise.race([
+    getJSON(
+      `https://restcountries.com/v3.1/name/Brazil`,
+      getJSON(`https://restcountries.com/v3.1/name/Egypt`)
+    ),
+  ]);
+
+  // console.log(res);
+})();
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('Request took too long'));
+    }, sec);
+  });
+};
+
+Promise.race([
+  getJSON(
+    `https://restcountries.com/v3.1/name/Brazil`,
+    getJSON(`https://restcountries.com/v3.1/name/Egypt`),
+    timeout(1 * 1000)
+  ),
+])
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err));
+
+//...................
+
+Promise.allSettled([
+  Promise.resolve('Promise'),
+  Promise.reject('Rejected promise'),
+  Promise.resolve('Promise 2'),
+]).then((res) => console.log(res));
+
+//......................
+
+Promise.any([
+  Promise.resolve('Promise'),
+  Promise.reject('Rejected promise'),
+  Promise.resolve('Promise 2'),
+])
+  .then((res) => console.log(res)) // Promise
+  .catch((err) => console.log(err));
+
+// similar to 'race' but rejected promises are ignored
