@@ -46,3 +46,14 @@ console.log('1' + 2 + 2); // 122
 // + is the only operator that can transform numbers into strings. other arithmetic operators always convert their operands to numbers
 
 console.log(4 - '2'); // 2 (number)
+
+// Numeric conversion, unary +
+
+console.log(+true); // 1
+console.log(+' '); // 0
+console.log(+'sting'); // NaN
+
+let br1 = '5';
+let br2 = '7';
+console.log(br1 + br2); // 57
+console.log(+br1 + +br2); // 12
