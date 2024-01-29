@@ -24,7 +24,6 @@ console.log(null === undefined); // false
 console.log(null > 0); // false
 console.log(null == 0); // false
 console.log(null >= 0); // true
-
 // Comparisons convert null to a number, treating it as 0. Equality check for undefined and null is defined such that they equal each other and don't equal anything else.
 
 // Incomparable undefined
@@ -68,3 +67,53 @@ console.log(c); // 5
 let x = (1 && 2) ?? 3;
 console.log(x); // 2
 // we can use parentheses to work around this
+
+//...........................NULLISH COALESCING ASSIGNMENT (??=)..............................
+
+//nullish coalescing assignment (??=) operator, OR the logical nullish assignment operator, only assigns a value if the value is undefined or null.
+
+// let a = 10;
+// a ??= 2;
+// console.log(a); //10
+
+// a = 0;
+// a ??= 2;
+// console.log(a); //0
+
+// a = undefined;
+// a ??= 2;
+// console.log(a); //2
+
+// // a = 23 ??= 20;
+// // console.log(a);
+// //invalid left-hand side in assignment
+
+// // ??= assigns a value to variable a only when a is nullish (null or undefined). If a has a non-nullish value, the assignment does not occur, and the value of a remains unchanged.
+
+// a = null;
+// a ??= console.log('log this if a is nullish');
+
+// // using ??= operator to apply default values to object properties.
+
+// const options = {
+//   // duration: 20,
+//   speed: 100,
+// };
+
+// console.log(
+//   (options.duration ??= 220),
+//   (options.speed ??= 50)
+// ); //220 100
+
+// a = undefined;
+// console.log((a ??= 23)); //23
+
+// let arr = [undefined, 1];
+
+// for (let i = 0; i < arr.length; i++) {
+//   if ((arr[i] ??= 12)) {
+//     console.log(arr[i]);
+//   }
+// }
+// //12
+// //1
